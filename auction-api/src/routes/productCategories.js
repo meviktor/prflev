@@ -1,29 +1,34 @@
 import { Router } from 'express';
 import models from '../models';
+import APIError from '../utils/apiError';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-    console.log(req.user.sub);
-    getProductCategories()
-    .then((documents) => {
-        res.send(documents.map((doc) => {
+router.get('/', async (req, res) => {
+    try{
+        const allCategories = await getProductCategories();
+        return res.send(allCategories.map((category) => {
             return {
-                id: doc._id,
-                name: doc.name,
-                parentCategoryId: doc.parentCategoryId
+                id: category._id,
+                name: category.name,
+                parentCategoryId: category.parentCategoryId
             };
         }));
-    })
-    .catch((error) => {
-        res.status(500).send({
-            errorMessage: `An error occured while getting the list of product categories. ${error}`
+    }
+    catch(e){
+        return res.status(e.httpStatusCode).send({
+            errorMessage: `${e.errorMessage}`
         });
-    });
+    }
 });
 
 async function getProductCategories(){
-    return await models.ProductCategory.find();
+    try{
+        return await models.ProductCategory.find();
+    }
+    catch(e){
+        throw new APIError('An error occured while getting the list of product categories.', 500);
+    }
 }
 
 export default router;

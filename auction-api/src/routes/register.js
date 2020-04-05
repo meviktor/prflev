@@ -1,9 +1,8 @@
 import { Router } from 'express';
 import models from '../models';
-import utils from '../utils';
+import APIError from '../utils/apiError';
 
 const router = Router();
-const APIError = utils.APIError;
 
 router.post('/', async (req, res) => {
     let userDataJson;
@@ -17,41 +16,21 @@ router.post('/', async (req, res) => {
         if(!userDataJson.username || !userDataJson.email || !userDataJson.password){
             throw new APIError('The username and/or email is missing!', 400);
         }
-    }
-    catch(e){
-        return res.status(e.httpStatusCode).send({
-            errorMessage: `${e.errorMessage}`
-        });
-    }
 
-    try{
         if(await isThisUsernameAlreadyUsed(userDataJson.username)){
             throw new APIError(`The username '${userDataJson.username}' is already in use.`, 400);
         }
-    }
-    catch(e){
-        return res.status(e.httpStatusCode).send({
-            success: false,
-            errorMessage: `${e.errorMessage}`
-        });
-    }
 
-    const newUser = new models.User({
-        username: userDataJson.username,
-        password: userDataJson.password,
-        email: userDataJson.email
-    });
+        await registerNewUser(userDataJson);
 
-    try{
-        await newUser.save();
         return res.send({
             success: true
         });
     }
     catch(e){
-        return res.status(500).send({
+        return res.status(e.httpStatusCode).send({
             success: false,
-            errorMessage: `An error occured while saving a user. ${e.errorMessage}`
+            errorMessage: `${e.errorMessage}`
         });
     }
 });
@@ -63,9 +42,23 @@ async function isThisUsernameAlreadyUsed(username){
         }
     }
     catch(e){
-        throw new APIError(`An error occured while checking if the username is unique. ${e}`, 500);
+        throw new APIError('An error occured while checking if the username is unique.', 500);
     }
     return false;
+}
+
+async function registerNewUser(userDataJson){
+    const newUser = new models.User({
+        username: userDataJson.username,
+        password: userDataJson.password,
+        email: userDataJson.email
+    });
+    try{
+        await newUser.save();
+    }
+    catch(e){
+        throw new APIError('An error occured while saving a new user.', 500);
+    }
 }
 
 export default router;

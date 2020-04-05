@@ -1,25 +1,26 @@
 import { Router } from 'express';
-import mongoose from 'mongoose';
 import models from '../models';
 import utils from '../utils';
 
 const router = Router();
+const APIError = utils.APIError;
 
 router.post('/', async (req, res) => {
     let queryJson;
     let auctionQuery = {};
+
     try{
         if(req.query.queryJson){
             queryJson = JSON.parse(decodeURI(req.query.queryJson));
         }
-        else throw new Error('The parameter contains the query (queryJson) is missing.');
+        else throw new APIError('The parameter contains the query (queryJson) is missing.', 400);
 
         // endDate
         const minEndDate = new Date(queryJson.endDateMin);
         const maxEndDate = new Date(queryJson.endDateMax);
         if(queryJson.endDateMin){
             if(!utils.dates.isValidDate(minEndDate)){
-                throw new Error('Invalid minimum value for auction end date.');
+                throw new APIError('Invalid minimum value for auction end date.', 400);
             }
             else{
                 auctionQuery.endDate = { $gte: minEndDate };
@@ -27,7 +28,7 @@ router.post('/', async (req, res) => {
         }
         if(queryJson.endDateMax){
             if(!utils.dates.isValidDate(maxEndDate) || !(maxEndDate >= minEndDate)){
-                throw new Error('Invalid maximum value for auction end date.');
+                throw new APIError('Invalid maximum value for auction end date.', 400);
             }
             else{
                 if(auctionQuery.endDate){
@@ -48,7 +49,7 @@ router.post('/', async (req, res) => {
             if(minStartingPrice > 0){
                 auctionQuery.startingPrice = { $gte: minStartingPrice};
             }
-            else throw new Error('Invalid minimum value for starting price.');
+            else throw new APIError('Invalid minimum value for starting price.', 400);
         }
         if(queryJson.startingPriceMax){
             if(minStartingPrice <= maxStartingPrice){
@@ -59,7 +60,7 @@ router.post('/', async (req, res) => {
                     auctionQuery.startingPrice = { $lte: maxStartingPrice };
                 }
             }
-            else throw new Error('Invalid maximum value for starting price.');
+            else throw new APIError('Invalid maximum value for starting price.', 400);
         }
 
         // highestBid
@@ -71,7 +72,7 @@ router.post('/', async (req, res) => {
             if(minHighestBid > 0){
                 auctionQuery.highestBid = { $gte: minHighestBid};
             }
-            else throw new Error('Invalid minimum value for highest bid.');
+            else throw new APIError('Invalid minimum value for highest bid.', 400);
         }
         if(queryJson.highestBidMax){
             if(minHighestBid <= maxHighestBid){
@@ -82,7 +83,7 @@ router.post('/', async (req, res) => {
                     auctionQuery.highestBid = { $lte: maxHighestBid };
                 }
             }
-            else throw new Error('Invalid maximum value for highest bid.');
+            else throw new APIError('Invalid maximum value for highest bid.', 400);
         }
 
         // productCategory
@@ -117,27 +118,29 @@ router.post('/', async (req, res) => {
 
         //keywords
         //TODO: implement this...
+
+        //sending the query to the database...
+        const foundAuctions = await produceAuctionList(auctionQuery);
+
+        return res.send(foundAuctions);
     }
     catch(e){
-        return res.status(400).send({
-            errorMessage: `${e}`
+        return res.status(e.httpStatusCode).send({
+            errorMessage: `${e.errorMessage}`
         });
     }
-    
-    console.log(auctionQuery);
-    produceAuctionList(auctionQuery)
-    .then((documents) => {
-        res.send(documents);
-    })
-    .catch((error) => {
-        res.status(500).send({
-            errorMessage: `An error occured while getting auction list. ${error}`
-        });
-    });
 });
 
 async function produceAuctionList(auctionQuery){
-    const auctionDocs = await models.Auction.find(auctionQuery);
+    let auctionDocs;
+
+    try{
+        auctionDocs = await models.Auction.find(auctionQuery);
+    }
+    catch(e){
+        throw new APIError('An error occured while getting the auction list.', 500);
+    }
+
     const auctionList = auctionDocs.map(auctionDoc => {
         return {
             id: auctionDoc._id,
@@ -148,6 +151,7 @@ async function produceAuctionList(auctionQuery){
             highestBid: auctionDoc.highestBid
         };
     });
+
     return auctionList;
 }
 

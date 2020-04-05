@@ -1,11 +1,10 @@
 import 'dotenv/config';
 import { Router } from 'express';
 import models from '../models';
-import utils from '../utils';
 import jwt from 'jsonwebtoken';
+import APIError from '../utils/apiError';
 
 const router = Router();
-const APIError = utils.APIError;
 
 router.post('/', async (req, res) => {
     let userDataJson;
@@ -19,19 +18,12 @@ router.post('/', async (req, res) => {
         if(!userDataJson.username || !userDataJson.password){
             throw new APIError('The username and/or password is missing!', 400);
         }
-    }
-    catch(e){
-        return res.status(e.httpStatusCode).send({
-            success: false,
-            errorMessage: `${e.errorMessage}`
-        });
-    }
 
-    try{
         const token = await authenticateUser(userDataJson.username, userDataJson.password);
         if(!token){
             throw new APIError('Invalid username and/or password.', 401);
         }
+
         return res.send({
             success: true,
             accessToken: token
@@ -43,7 +35,6 @@ router.post('/', async (req, res) => {
             errorMessage: `${e.errorMessage}`
         });
     }
-
 });
 
 async function authenticateUser(username, password){

@@ -1,28 +1,38 @@
 import { Router } from 'express';
 import models from '../models';
+import APIError from '../utils/apiError';
 
 const router = Router();
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     let auctionJson;
+
     try{
         if(req.query.auctionJson){
             auctionJson = JSON.parse(decodeURI(req.query.auctionJson));
         }
-        else throw new Error('The parameter contains the query (auctionJson) is missing.');
+        else throw new APIError('The parameter contains the query (auctionJson) is missing.', 400);
 
         if(!auctionJson.ownerUserId || !auctionJson.endDate || !auctionJson.startingPrice || !auctionJson.incr
             || !auctionJson.product.productCategoryId || !auctionJson.product.name){
-            throw new Error('One or more required field is missing.');
+            throw new APIError('One or more required field is missing.', 400);
         }
-    }
-    catch(e){
-        return res.status(400).send({
-            errorMessage: `${e}`
+
+        const createdAuctionId = await createAuction(auctionJson);
+
+        return res.send({
+            auctionId: createdAuctionId
         });
     }
+    catch(e){
+        return res.status(e.httpStatusCode).send({
+            errorMessage: `${e.errorMessage}`
+        });
+    }
+});
 
-    var auctionToSave = new models.Auction({
+async function createAuction(auctionJson){
+    const auctionToSave = new models.Auction({
         ownerUserId: auctionJson.ownerUserId,
         createdDate: new Date(),
         endDate: new Date(auctionJson.endDate),
@@ -38,17 +48,13 @@ router.post('/', (req, res) => {
         }
     });
 
-    auctionToSave.save()
-    .then((document) => {
-        res.send({
-            auctionId: document._id
-        });
-    })
-    .catch((error) => {
-        res.status(500).send({
-            errorMessage: `An error occured while saving auction. ${error}`
-        });
-    });
-});
+    try{
+        const savedAuction = await auctionToSave.save();
+        return savedAuction._id;
+    }
+    catch(e){
+        throw new APIError('An error occured while saving an auction.', 500);
+    }
+}
 
 export default router;
