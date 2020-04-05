@@ -4,6 +4,7 @@ import models from '../models';
 const router = Router();
 
 router.get('/', (req, res) => {
+    console.log(req.user.sub);
     getProductCategories()
     .then((documents) => {
         res.send(documents.map((doc) => {

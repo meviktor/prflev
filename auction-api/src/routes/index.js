@@ -5,6 +5,7 @@ import auctionDetails from './auctionDetails';
 import addBid from './addBid';
 import createProductCategory from './createProductCategory';
 import register from './register';
+import authenticate from './authenticate';
 
 export default {
     queryAuctions,
@@ -13,5 +14,6 @@ export default {
     auctionDetails,
     addBid,
     createProductCategory,
-    register
+    register,
+    authenticate
 }
