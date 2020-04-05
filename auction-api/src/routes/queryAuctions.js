@@ -6,15 +6,10 @@ const router = Router();
 const APIError = utils.APIError;
 
 router.post('/', async (req, res) => {
-    let queryJson;
+    const queryJson = req.body;
     let auctionQuery = {};
 
     try{
-        if(req.query.queryJson){
-            queryJson = JSON.parse(decodeURI(req.query.queryJson));
-        }
-        else throw new APIError('The parameter contains the query (queryJson) is missing.', 400);
-
         // endDate
         const minEndDate = new Date(queryJson.endDateMin);
         const maxEndDate = new Date(queryJson.endDateMax);

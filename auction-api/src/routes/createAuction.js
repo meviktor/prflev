@@ -5,35 +5,32 @@ import APIError from '../utils/apiError';
 const router = Router();
 
 router.post('/', async (req, res) => {
-    let auctionJson;
+    let userId = req.user.sub;
+    let auctionJson = req.body;
 
     try{
-        if(req.query.auctionJson){
-            auctionJson = JSON.parse(decodeURI(req.query.auctionJson));
-        }
-        else throw new APIError('The parameter contains the query (auctionJson) is missing.', 400);
-
-        if(!auctionJson.ownerUserId || !auctionJson.endDate || !auctionJson.startingPrice || !auctionJson.incr
+        if(!auctionJson.endDate || !auctionJson.startingPrice || !auctionJson.incr
             || !auctionJson.product.productCategoryId || !auctionJson.product.name){
-            throw new APIError('One or more required field is missing.', 400);
+            throw new APIError('You have to provide all of the following parameters: endDate, startingPrice, incr, product.productCategoryId, product.name.', 400);
         }
 
-        const createdAuctionId = await createAuction(auctionJson);
+        const createdAuctionId = await createAuction(auctionJson, userId);
 
         return res.send({
             auctionId: createdAuctionId
         });
     }
     catch(e){
+        console.log(e);
         return res.status(e.httpStatusCode).send({
             errorMessage: `${e.errorMessage}`
         });
     }
 });
 
-async function createAuction(auctionJson){
+async function createAuction(auctionJson, userId){
     const auctionToSave = new models.Auction({
-        ownerUserId: auctionJson.ownerUserId,
+        ownerUserId: userId,
         createdDate: new Date(),
         endDate: new Date(auctionJson.endDate),
         startingPrice: auctionJson.startingPrice,

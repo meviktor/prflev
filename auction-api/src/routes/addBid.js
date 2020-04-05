@@ -5,18 +5,12 @@ import APIError from '../utils/apiError';
 const router = Router();
 
 router.post('/', async (req, res) => {
-    let bidJson;
+    const userId = req.user.sub;
+    let bidJson = req.body;
 
     try{
-        if(req.query.bidJson){
-            bidJson = JSON.parse(decodeURI(req.query.bidJson));
-        }
-        else{
-            throw new APIError('The parameter contains the bid info (bidJson) is missing.', 400);
-        }
-
-        if(!bidJson.auctionId || !bidJson.biddingUserId || !bidJson.amount || isNaN(bidJson.amount)){
-            throw new APIError('One or more required field is missing.', 400);
+        if(!bidJson.auctionId || !bidJson.amount || isNaN(bidJson.amount)){
+            throw new APIError('You have to provide all of the following parameters: auctionId, amount.', 400);
         }
 
         let foundAuction;
@@ -41,7 +35,7 @@ router.post('/', async (req, res) => {
             }
         }
 
-        const updatedAuctionId = await updateAuctionWithNewBid(foundAuction, bidJson);
+        const updatedAuctionId = await updateAuctionWithNewBid(foundAuction, bidJson.amount, userId);
 
         return res.send({
             auctionId: updatedAuctionId
@@ -54,13 +48,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-async function updateAuctionWithNewBid(auctionToUpdate, bidJson){
+async function updateAuctionWithNewBid(auctionToUpdate, bidAmount, userId){
     auctionToUpdate.bids.push({
-        biddingUserId: bidJson.biddingUserId,
+        biddingUserId: userId,
         createdDate: new Date(),
-        amount: Number(bidJson.amount)
+        amount: Number(bidAmount)
     });
-    auctionToUpdate.highestBid = Number(bidJson.amount);
+    auctionToUpdate.highestBid = Number(bidAmount);
 
     try{
         const updatedAuction = await auctionToUpdate.save();

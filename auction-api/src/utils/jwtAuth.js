@@ -8,7 +8,7 @@ jwtAuth.validateJwt = function(){
         secret: process.env.API_SECRET
     }).unless({
         path:[
-            '/regiter',
+            '/register',
             '/authenticate'
         ]
     });

@@ -7,16 +7,11 @@ import APIError from '../utils/apiError';
 const router = Router();
 
 router.post('/', async (req, res) => {
-    let userDataJson;
+    let userDataJson = req.body;
 
     try{
-        if(req.query.userDataJson){
-            userDataJson = JSON.parse(decodeURI(req.query.userDataJson));
-        }
-        else throw new APIError('The parameter contains the user info (userDataJson) is missing.', 400);
-
         if(!userDataJson.username || !userDataJson.password){
-            throw new APIError('The username and/or password is missing!', 400);
+            throw new APIError('You have to provide all of the following parameters: username, password.', 400);
         }
 
         const token = await authenticateUser(userDataJson.username, userDataJson.password);

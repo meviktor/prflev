@@ -5,26 +5,25 @@ import APIError from '../utils/apiError';
 const router = Router();
 
 router.post('/', async (req, res) => {
-    let productCategoryJson;
+    const productCategoryJson = req.body;
 
     try{
-        if(req.query.productCategoryJson){
-            productCategoryJson = JSON.parse(decodeURI(req.query.productCategoryJson));
-        }
-        else{
-            throw new APIError('The parameter contains the product category info (productCategoryJson) is missing.', 400);
+        if(!productCategoryJson.name){
+            throw new APIError('You have to provide all of the following parameters: name.', 400);
         }
 
         const pcid = productCategoryJson.parentCategoryId;
         let parentCategory;
-        try{
-            parentCategory = await models.ProductCategory.findById(pcid);
-        }
-        catch(e){
-            throw new APIError('An error occured while searching for a product category.', 500);
-        }
-        if(pcid && !parentCategory){
-            throw new APIError(`No existing parent category found with this id: ${pcid}`, 400);  
+        if(pcid){
+            try{
+                parentCategory = await models.ProductCategory.findById(pcid);
+            }
+            catch(e){
+                throw new APIError('An error occured while searching for a product category.', 500);
+            }
+            if(!parentCategory){
+                throw new APIError(`No existing parent category found with this id: ${pcid}`, 400);  
+            }
         }
 
         const createdCategoryId = await createProductCategory(productCategoryJson);
