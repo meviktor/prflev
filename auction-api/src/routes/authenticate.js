@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 
         const token = await authenticateUser(userDataJson.username, userDataJson.password);
         if(!token){
-            throw new APIError('Invalid username and/or password.', 401);
+            throw new APIError('Invalid username and/or password.', 400);
         }
 
         return res.send({
