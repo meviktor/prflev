@@ -15,6 +15,13 @@ const auctionSchema = new mongoose.Schema({
             amount: {type: Number}
         }
     ],
+    comments: [
+        {
+            commentingUserId: {type: ObjectId},
+            createdDate: {type: Date},
+            commentText: {type: String}
+        }
+    ],
     incr: {type: Number},
     product: {
         productCategoryId: {type: ObjectId},

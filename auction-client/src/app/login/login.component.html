@@ -1,6 +1,5 @@
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-4">Login</h1>
+<div class="jumbotron container">
+    <h1 class="display-4">Login</h1>
         <p class="lead">to auction-gui</p>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -29,5 +28,4 @@
             </div>
             <div *ngIf="error" class="alert alert-danger">{{error}}</div>
         </form>
-    </div>
 </div>

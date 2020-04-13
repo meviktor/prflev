@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
         }
 
         const auctionDetails = await getAuctionDetails(auctionId);
+        auctionDetails.requesterUserId = req.user.sub;
 
         return res.send(auctionDetails);
     }
@@ -78,6 +79,26 @@ async function getAuctionDetails(auctionId){
         };
    }
    auctionDetails.bids = bids;
+
+   let comments = [];
+   for(let i = 0; i < foundAuctionDoc.comments.length; ++i){
+        let commentingUser;
+        try{
+            commentingUser = await models.User.findById(foundAuctionDoc.comments[i].commentingUserId);
+        } 
+        catch(e){
+            throw new APIError('An error occured wile trying to find a user.', 500);
+        }
+        const commentingUserName = commentingUser.username;
+
+        comments[i] = {
+            commentingUserId: foundAuctionDoc.comments[i].commentingUserId,
+            commentingUserName: commentingUserName,
+            commentText: foundAuctionDoc.comments[i].commentText,
+            createdDate: foundAuctionDoc.comments[i].createdDate
+        };
+   }
+   auctionDetails.comments = comments;
 
    return auctionDetails;
 }

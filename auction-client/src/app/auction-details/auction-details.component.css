@@ -1,0 +1,78 @@
+.baseBox{
+    background: #90caf9;
+    border-radius: 10px;
+    padding: 10px;   
+}
+
+.baseBox.productNameBox{
+    max-height: 40px;
+    align-items: center;
+}
+
+.baseBox.descriptionBox{
+    padding: 20px;
+    min-height: 200px;
+}
+
+.baseBox.labelBox{
+    height: 50px;
+    margin-right: 20px;
+    align-items: center;
+}
+
+.baseBox.bidBox{
+    min-height: 150px;
+    max-height: 250px;
+    margin-right: 20px;
+}
+
+.baseBox.bidBox.bidForm{
+    margin-right: 0;
+}
+
+.baseBox.auctionInfoBox{
+    height: 100px;
+}
+
+.commentsArea{
+    background: #64b5f6;
+}
+
+.baseBox.commentBox{
+    background: #e3f2fd;
+    margin-bottom: 20px;
+}
+
+.commentsContainer{
+    padding: 5px;
+    max-height: 400px;
+}
+
+.bidTable{
+    max-height: 150px;
+}
+
+ol{
+    padding-inline-start: 5px;
+}
+
+li{
+    list-style: none;
+    float: left;
+    padding-right: 5px;
+}
+
+.categoryPath li::after {
+        content: ">";
+}
+.categoryPath li:last-child::after {
+        content: "";
+}
+
+.keywordList li::after {
+    content: ",";
+}
+
+.keywordList li:last-child::after{
+    content: "";
+}

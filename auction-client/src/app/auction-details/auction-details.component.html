@@ -1,0 +1,148 @@
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+<div *ngIf="auctionData">
+    <div class="row mb-2">
+        <div class="col">
+            <ol class="categoryPath">
+                <li *ngFor="let category of path">
+                    {{category}}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div *ngIf="isAuctionExpired" class="row mb-1 expiredInfo">
+        <div class="col">
+            This auction is expired.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-xl-6">
+            <div class="row mb-3">
+                <div class="col baseBox productNameBox"><b>{{auctionData.product.name}}</b></div>    
+            </div>
+            <div class="row mb-3">
+                <div class="col baseBox descriptionBox scrollable customScrollbar">
+                    {{auctionData.product.description}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2 baseBox labelBox"><b>Current price:</b></div>
+                <div class="col-2 baseBox labelBox">{{auctionData.highestBid ? auctionData.highestBid : auctionData.startingPrice}}$</div>
+                <div class="col-2 baseBox labelBox"><b>Starting price:</b></div>
+                <div class="col-2 baseBox labelBox">{{auctionData.startingPrice}}$</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-7 baseBox bidBox">
+                    <div class="row mb-2">
+                        Bids
+                    </div>
+                    <hr/>
+                    <div *ngIf="auctionData.highestBid" class="bidTable scrollable customScrollbar">
+                        <table style="width: 100%;">
+                            <thead>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let bid of auctionData.bids">
+                                    <td>{{bid.biddingUserName}}</td>
+                                    <td>{{bid.amount}}$</td>
+                                    <td>{{bid.createdDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="!auctionData.highestBid">
+                        No one has bid on this product yet. Be the first one!
+                    </div>
+                </div>
+                <div *ngIf="!watchingMyOwnAuction && !isAuctionExpired" class="col-4 baseBox bidBox bidForm">
+                    <div class="row mb-2">
+                        Make your bid
+                    </div>
+                    <form [formGroup]="bidForm" (ngSubmit)="onBidSubmit()" (keydown.enter)="$event.preventDefault()">
+                        <div class="form-group">
+                            <input type="number" formControlName="amount" class="form-control" [ngClass]="{ 'is-invalid': bidSubmitted && bidForm.controls.amount.errors }"/>
+                            <div *ngIf="bidSubmitted && bidForm.controls.amount.hasError('required')" class="text-danger">
+                                <div>Amount is missing!</div>
+                            </div>
+                            <div *ngIf="bidSubmitted && bidForm.controls.amount.hasError('lowOpeningBid')" class="text-danger">
+                                <div>You have to enter {{auctionData.startingPrice}}$ or more!</div>
+                            </div>
+                            <div *ngIf="bidSubmitted && bidForm.controls.amount.hasError('lowBid')" class="text-danger">
+                                <div>You have to enter {{auctionData.highestBid + auctionData.incr}}$ or more!</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-round" [disabled]="addBidButtonPressed">Add your bid</button>
+                        </div>
+                    </form>
+                    <div>
+                        <b>Increment:</b> {{auctionData.incr}}$.<br>
+                        Enter {{auctionData.highestBid ? (auctionData.highestBid + auctionData.incr) : auctionData.startingPrice}}$ or more.
+                    </div>
+                </div>
+                <div *ngIf="isAuctionExpired" class="col-4 baseBox labelBox expiredInfo">
+                    <b>Winner: {{auctionData.bids[0].biddingUserName}}</b>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-6">
+            <div class="row mb-3">
+                <div class="col baseBox auctionInfoBox">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>Owner user:</td>
+                            <td>{{auctionData.ownerUserName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Started at:</td>
+                            <td>{{auctionData.startedAt}}</td>
+                        </tr>
+                        <tr>
+                            <td>Ends at:</td>
+                            <td [ngClass]="{ 'expiredInfo': isAuctionExpired }">{{auctionData.endsAt}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col baseBox commentsArea">
+                    <div class="row mb-2">
+                        Comments
+                    </div>
+                    <hr/>
+                    <div *ngIf="auctionData.comments.length" class="baseBox commentsContainer scrollable customScrollbar">
+                        <div *ngFor="let comment of auctionData.comments" class="baseBox commentBox">
+                            <div class="row mb-1">
+                                <b>{{comment.commentingUserName}}</b>&nbsp;at&nbsp;<i>{{comment.createdDate}}</i>
+                            </div>
+                            <hr/>
+                            <div class="row mb-1">
+                                {{comment.commentText}}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!auctionData.comments.length">
+                        No comments.
+                    </div>
+                    <hr/>
+                    <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()" (keydown.enter)="$event.preventDefault()">
+                        <div class="form-group">
+                            <input type="text" formControlName="commentText" class="form-control" [ngClass]="{ 'is-invalid': commentSubmitted && commentForm.controls.commentText.errors }"/>
+                            <div *ngIf="commentSubmitted && commentForm.controls.commentText.hasError('required')" class="text-danger">
+                                <div>Comment text is missing!</div>
+                            </div>
+                            <div *ngIf="commentSubmitted && commentForm.controls.commentText.hasError('isNullOrWhiteSpace')" class="text-danger">
+                                <div>Invalid comment text!</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-round" [disabled]="addCommentButtonPressed">Add comment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

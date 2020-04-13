@@ -26,6 +26,7 @@ app.use('/addBid', routes.addBid);
 app.use('/createProductCategory', routes.createProductCategory);
 app.use('/register', routes.register);
 app.use('/authenticate', routes.authenticate);
+app.use('/addComment', routes.addComment);
 
 connectDb().then(async () => {
     app.listen(process.env.API_PORT, () =>

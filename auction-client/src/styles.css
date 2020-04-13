@@ -1,3 +1,35 @@
+body{
+    background: #e3f2fd;
+}
+
 .right{
     float: right;
+}
+
+.row{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.scrollable{
+    overflow-y: auto;
+}
+
+.customScrollbar::-webkit-scrollbar {
+        width: 8px;
+}
+    
+.customScrollbar::-webkit-scrollbar-track {
+        background: #aaaaaa;
+        border-radius: 5px;
+}
+    
+.customScrollbar::-webkit-scrollbar-thumb {
+        background: #999999;
+        border-radius: 5px;
+}
+
+.expiredInfo{
+    font-weight: bold;
+    color: #ff0000;
 }

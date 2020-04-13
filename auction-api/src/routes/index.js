@@ -6,6 +6,7 @@ import addBid from './addBid';
 import createProductCategory from './createProductCategory';
 import register from './register';
 import authenticate from './authenticate';
+import addComment from './addComment';
 
 export default {
     queryAuctions,
@@ -15,5 +16,6 @@ export default {
     addBid,
     createProductCategory,
     register,
-    authenticate
+    authenticate,
+    addComment
 }
