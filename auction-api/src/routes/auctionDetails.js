@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
             auctionId = decodeURI(req.query.auctionId);
         }
         else{
-            throw new APIError('The parameter contains the auction id (auctionId) is missing.', 500);
+            throw new APIError('The parameter contains the auction id (auctionId) is missing.', 400);
         }
 
         const auctionDetails = await getAuctionDetails(auctionId);

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import models from '../models';
 import utils from '../utils';
+import auction from '../models/auction';
 
 const router = Router();
 const APIError = utils.APIError;
@@ -159,7 +160,8 @@ async function produceAuctionList(auctionQuery){
             endsAt: auctionDoc.endDate,
             productName: auctionDoc.product.name,
             startingPrice: auctionDoc.startingPrice,
-            highestBid: auctionDoc.highestBid
+            highestBid: auctionDoc.highestBid,
+            numberOfComments: auctionDoc.comments ? auctionDoc.comments.length : 0
         };
     });
 
