@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { AuctionDetailsComponent } from './auction-details/auction-details.component';
+import { UserdetailsComponent } from './userdetails/userdetails.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AuctionDetailsComponent } from './auction-details/auction-details.compo
     RegisterComponent,
     HomeComponent,
     AuctionDetailsComponent,
+    UserdetailsComponent,
   ],
   imports: [
     BrowserModule,

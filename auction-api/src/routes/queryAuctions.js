@@ -93,7 +93,7 @@ router.post('/', async (req, res) => {
         if(searchWords){
             // searchInDescription
             // TODO: this case (also search in description) needs to be fixed...
-            if(queryJson.searchInDescription){
+            if(queryJson.searchInDescription === true){
                 auctionQuery.$or = [];
                 const condition1 = {}, condition2 = {};
 
@@ -108,6 +108,22 @@ router.post('/', async (req, res) => {
             }
             else{
                 auctionQuery[`product.name`] = { $regex: utils.regex.buildContainsRegex(searchWords), $options: searchOptions };
+            }
+        }
+
+        // owner user
+        if(queryJson.ownerUserId){
+            auctionQuery.ownerUserId = queryJson.ownerUserId;
+        }
+
+        // only active auctions (now =< endDate)
+        if(queryJson.onlyActive === true){
+            // overwrite endDate filter's '>=' condition no matter what it contains...
+            if(auctionQuery.endDate){
+                auctionQuery.endDate.$gte = new Date();
+            }
+            else{
+                auctionQuery.endDate = {$gte: new Date()};
             }
         }
 
@@ -128,12 +144,12 @@ router.post('/', async (req, res) => {
 
 async function produceAuctionList(auctionQuery){
     let auctionDocs;
-
+    
     try{
         auctionDocs = await models.Auction.find(auctionQuery);
     }
     catch(e){
-        throw new APIError('An error occured while getting the auction list.', 500);
+        throw new APIError(`An error occured while getting the auction list. Error: ${e}`, 500);
     }
 
     const auctionList = auctionDocs.map(auctionDoc => {
