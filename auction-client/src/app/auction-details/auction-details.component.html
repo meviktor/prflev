@@ -1,4 +1,4 @@
-<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+<div *ngIf="error" class="col-xl-9 col-lg-12 alert alert-danger">{{error}}</div>
 <div *ngIf="auctionData">
     <div class="row mb-2">
         <div class="col">
@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-lg-12 col-xl-6">
             <div class="row mb-3">
-                <div class="col baseBox productNameBox"><b>{{auctionData.product.name}}</b></div>    
+                <div class="col baseBox productNameBox"><h4>{{auctionData.product.name}}</h4></div>  
             </div>
             <div class="row mb-3">
                 <div class="col baseBox descriptionBox scrollable customScrollbar">
@@ -33,7 +33,7 @@
             <div class="row mb-3">
                 <div class="col-7 baseBox bidBox">
                     <div class="row mb-2">
-                        Bids
+                        <h3>Bids</h3>
                     </div>
                     <hr/>
                     <div *ngIf="auctionData.highestBid" class="bidTable scrollable customScrollbar">
@@ -45,7 +45,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let bid of auctionData.bids">
-                                    <td>{{bid.biddingUserName}}</td>
+                                    <td><a href="userDetails/{{bid.biddingUserId}}">{{bid.biddingUserName}}</a></td>
                                     <td>{{bid.amount}}$</td>
                                     <td>{{bid.createdDate}}</td>
                                 </tr>
@@ -58,7 +58,7 @@
                 </div>
                 <div *ngIf="!watchingMyOwnAuction && !isAuctionExpired" class="col-4 baseBox bidBox bidForm">
                     <div class="row mb-2">
-                        Make your bid
+                        <h3>Make your bid</h3>
                     </div>
                     <form [formGroup]="bidForm" (ngSubmit)="onBidSubmit()" (keydown.enter)="$event.preventDefault()">
                         <div class="form-group">
@@ -83,7 +83,8 @@
                     </div>
                 </div>
                 <div *ngIf="isAuctionExpired" class="col-4 baseBox labelBox expiredInfo">
-                    <b>Winner: {{auctionData.bids[0].biddingUserName}}</b>
+                    <div *ngIf="auctionData.bids.length"><b>Winner: <a href="userDetails/{{auctionData.bids[0].biddingUserId}}">{{auctionData.bids[0].biddingUserName}}</a></b></div>
+                    <div *ngIf="!auctionData.bids.length">This auction has no winner.</div>
                 </div>
             </div>
         </div>
@@ -93,7 +94,7 @@
                     <table style="width: 100%;">
                         <tr>
                             <td>Owner user:</td>
-                            <td>{{auctionData.ownerUserName}}</td>
+                            <td><a href="userDetails/{{auctionData.ownerUserId}}">{{auctionData.ownerUserName}}</a></td>
                         </tr>
                         <tr>
                             <td>Started at:</td>
@@ -108,14 +109,14 @@
             </div>
             <div class="row">
                 <div class="col baseBox commentsArea">
-                    <div class="row mb-2">
-                        Comments
+                    <div class="row">
+                        <h4>Comments</h4>
                     </div>
                     <hr/>
                     <div *ngIf="auctionData.comments.length" class="baseBox commentsContainer scrollable customScrollbar">
                         <div *ngFor="let comment of auctionData.comments" class="baseBox commentBox">
                             <div class="row mb-1">
-                                <b>{{comment.commentingUserName}}</b>&nbsp;at&nbsp;<i>{{comment.createdDate}}</i>
+                                <b><a href="userDetails/{{comment.commentingUserId}}">{{comment.commentingUserName}}</a></b>&nbsp;at&nbsp;<i>{{comment.createdDate}}</i>
                             </div>
                             <hr/>
                             <div class="row mb-1">

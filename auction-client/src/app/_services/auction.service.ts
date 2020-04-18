@@ -9,6 +9,10 @@ export class AuctionService {
 
   constructor(private http: HttpClient) { }
 
+  queryAuctions(auctionQuery: any){
+    return this.http.post<any>(`${environment.apiUrl}/queryAuctions`, auctionQuery);
+  }
+
   getAuctionDetails(auctionId: string){
     return this.http.get<any>(`${environment.apiUrl}/auctionDetails`, {params: {auctionId: auctionId}});
   }

@@ -1,0 +1,34 @@
+<div *ngIf="userInfoError" class="row">
+    <div class="col-xl-9 col-lg-12 alert alert-danger">{{userInfoError}}</div>
+</div>
+<div *ngIf="!userInfoError && userInfo" class="row">
+    <div class="col">
+        <div class="row mb-2">
+            <h3>User details</h3>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2 baseBox labelBox"><b>Username:</b></div>
+            <div class="col-4 baseBox labelBox">{{userInfo.username}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2 baseBox labelBox"><b>E-mail:</b></div>
+            <div class="col-4 baseBox labelBox">{{userInfo.email}}</div>
+        </div>
+        <div class="row mb-2">
+            <h3>Active auctions</h3>
+        </div>
+        <div *ngIf="userAuctionError" class="row alert alert-danger">{{userAuctionError}}</div>
+        <div *ngIf="!userAuctionError && usersActiveAuctions.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
+            <div *ngFor="let auction of usersActiveAuctions" class="row mb-3 baseBox auctionRowBox">
+                <div class="col-4"><b><a href="auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
+                <div class="col-1">{{auction.highestBid ? auction.highestBid : auction.startingPrice}}$</div>
+                <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
+                <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
+                <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
+            </div>
+        </div>
+        <div *ngIf="!userAuctionError && !usersActiveAuctions.length">
+            No active auctions.
+        </div>
+    </div>
+</div>
