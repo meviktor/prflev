@@ -50,7 +50,7 @@ async function getAuctionDetails(auctionId){
        startedAt: foundAuctionDoc.createdDate,
        endsAt: foundAuctionDoc.endDate,
        startingPrice: foundAuctionDoc.startingPrice,
-       highestBid: foundAuctionDoc.highestBid,
+       actualPrice: foundAuctionDoc.actualPrice,
        incr: foundAuctionDoc.incr,
        product: {
            productCategoryId: foundAuctionDoc.product.productCategoryId,

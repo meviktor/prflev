@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import models from '../models';
 import utils from '../utils';
-import auction from '../models/auction';
 
 const router = Router();
 const APIError = utils.APIError;
@@ -59,27 +58,27 @@ router.post('/', async (req, res) => {
             else throw new APIError('Invalid maximum value for starting price.', 400);
         }
 
-        // highestBid
-        const minHighestBid = 
-            (queryJson.highestBidMin && !isNaN(queryJson.highestBidMin)) ? Number(queryJson.highestBidMin) : 0;
-        const maxHighestBid =
-            (queryJson.highestBidMax && !isNaN(queryJson.highestBidMax)) ? Number(queryJson.highestBidMax) : 0;
-        if(queryJson.highestBidMin){
-            if(minHighestBid > 0){
-                auctionQuery.highestBid = { $gte: minHighestBid};
+        // actualPrice
+        const minActualPrice= 
+            (queryJson.actualPriceMin && !isNaN(queryJson.actualPriceMin)) ? Number(queryJson.actualPriceMin) : 0;
+        const maxActualPrice =
+            (queryJson.actualPriceMax && !isNaN(queryJson.actualPriceMax)) ? Number(queryJson.actualPriceMax) : 0;
+        if(queryJson.actualPriceMin){
+            if(minActualPrice > 0){
+                auctionQuery.actualPrice = { $gte: minActualPrice};
             }
-            else throw new APIError('Invalid minimum value for highest bid.', 400);
+            else throw new APIError('Invalid value for minimum price.', 400);
         }
-        if(queryJson.highestBidMax){
-            if(minHighestBid <= maxHighestBid){
-                if(auctionQuery.highestBid){
-                    auctionQuery.highestBid.$lte = maxHighestBid;
+        if(queryJson.actualPriceMax){
+            if(minActualPrice <= maxActualPrice){
+                if(auctionQuery.actualPrice){
+                    auctionQuery.actualPrice.$lte = maxActualPrice;
                 }
                 else{
-                    auctionQuery.highestBid = { $lte: maxHighestBid };
+                    auctionQuery.actualPrice = { $lte: maxActualPrice };
                 }
             }
-            else throw new APIError('Invalid maximum value for highest bid.', 400);
+            else throw new APIError('Invalid value for maximum price.', 400);
         }
 
         // productCategory
@@ -160,7 +159,7 @@ async function produceAuctionList(auctionQuery){
             endsAt: auctionDoc.endDate,
             productName: auctionDoc.product.name,
             startingPrice: auctionDoc.startingPrice,
-            highestBid: auctionDoc.highestBid,
+            actualPrice: auctionDoc.actualPrice,
             numberOfComments: auctionDoc.comments ? auctionDoc.comments.length : 0
         };
     });

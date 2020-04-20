@@ -26,13 +26,13 @@ router.post('/', async (req, res) => {
         if(new Date(foundAuction.endDate) < new Date()){
             throw new APIError(`This auction is expired at ${new Date(foundAuction.endDate)}. New bids are not allowed anymore.`, 400);
         }
-        if(!foundAuction.highestBid){
+        if(!foundAuction.actualPrice){
             if(!(Number(bidJson.amount) >= foundAuction.startingPrice)){
                 throw new APIError(`The starting bid cannot be lower than the starting price (${foundAuction.startingPrice}).`, 400);
             }
         }
         else{
-            const lowestPossibleBid = foundAuction.highestBid + foundAuction.incr;
+            const lowestPossibleBid = foundAuction.actualPrice + foundAuction.incr;
             if(!(Number(bidJson.amount) >= lowestPossibleBid)){
                 throw new APIError(`The new bid must be greater than or equal to the last bid plus the increment (${lowestPossibleBid}).`, 400);
             }
@@ -57,7 +57,7 @@ async function updateAuctionWithNewBid(auctionToUpdate, bidAmount, userId){
         createdDate: new Date(),
         amount: Number(bidAmount)
     });
-    auctionToUpdate.highestBid = Number(bidAmount);
+    auctionToUpdate.actualPrice = Number(bidAmount);
 
     try{
         const updatedAuction = await auctionToUpdate.save();

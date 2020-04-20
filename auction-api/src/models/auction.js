@@ -7,7 +7,7 @@ const auctionSchema = new mongoose.Schema({
     createdDate: {type: Date},
     endDate: {type: Date},
     startingPrice: {type: Number},
-    highestBid: {type: Number},
+    actualPrice: {type: Number},
     bids: [
         {
             biddingUserId: {type: ObjectId},

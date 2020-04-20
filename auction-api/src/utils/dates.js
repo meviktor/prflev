@@ -1,7 +1,7 @@
 const dates = {};
 
 dates.isValidDate = function(d) {
-    return d instanceof Date && !isNaN(d);
+    return !isNaN(d.valueOf());
 }
 
 export default dates;

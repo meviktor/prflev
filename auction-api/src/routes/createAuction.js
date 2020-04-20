@@ -34,7 +34,7 @@ async function createAuction(auctionJson, userId){
         createdDate: new Date(),
         endDate: new Date(auctionJson.endDate),
         startingPrice: auctionJson.startingPrice,
-        highestBid: undefined,
+        actualPrice: auctionJson.startingPrice,
         bids: [],
         incr: auctionJson.incr,
         product: {
