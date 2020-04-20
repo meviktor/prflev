@@ -2,11 +2,7 @@
 <div *ngIf="auctionData">
     <div class="row mb-2">
         <div class="col">
-            <ol class="categoryPath">
-                <li *ngFor="let category of path">
-                    {{category}}
-                </li>
-            </ol>
+            {{path}}
         </div>
     </div>
     <div *ngIf="isAuctionExpired" class="row mb-1 expiredInfo">
@@ -26,7 +22,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-2 baseBox labelBox"><b>Current price:</b></div>
-                <div class="col-2 baseBox labelBox">{{auctionData.highestBid ? auctionData.highestBid : auctionData.startingPrice}}$</div>
+                <div class="col-2 baseBox labelBox">{{auctionData.actualPrice}}$</div>
                 <div class="col-2 baseBox labelBox"><b>Starting price:</b></div>
                 <div class="col-2 baseBox labelBox">{{auctionData.startingPrice}}$</div>
             </div>
@@ -36,7 +32,7 @@
                         <h3>Bids</h3>
                     </div>
                     <hr/>
-                    <div *ngIf="auctionData.highestBid" class="bidTable scrollable customScrollbar">
+                    <div *ngIf="auctionData.bids.length" class="bidTable scrollable customScrollbar">
                         <table style="width: 100%;">
                             <thead>
                                 <th>User</th>
@@ -52,7 +48,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div *ngIf="!auctionData.highestBid">
+                    <div *ngIf="!auctionData.bids.length">
                         No one has bid on this product yet. Be the first one!
                     </div>
                 </div>
@@ -70,7 +66,7 @@
                                 <div>You have to enter {{auctionData.startingPrice}}$ or more!</div>
                             </div>
                             <div *ngIf="bidSubmitted && bidForm.controls.amount.hasError('lowBid')" class="text-danger">
-                                <div>You have to enter {{auctionData.highestBid + auctionData.incr}}$ or more!</div>
+                                <div>You have to enter {{auctionData.actualPrice + auctionData.incr}}$ or more!</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -79,7 +75,7 @@
                     </form>
                     <div>
                         <b>Increment:</b> {{auctionData.incr}}$.<br>
-                        Enter {{auctionData.highestBid ? (auctionData.highestBid + auctionData.incr) : auctionData.startingPrice}}$ or more.
+                        Enter {{auctionData.actualPrice == auctionData.startingPrice ? auctionData.startingPrice : (auctionData.actualPrice + auctionData.incr)}}$ or more.
                     </div>
                 </div>
                 <div *ngIf="isAuctionExpired" class="col-4 baseBox labelBox expiredInfo">

@@ -21,7 +21,7 @@
         <div *ngIf="!userAuctionError && usersActiveAuctions.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
             <div *ngFor="let auction of usersActiveAuctions" class="row mb-3 baseBox auctionRowBox">
                 <div class="col-4"><b><a href="auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
-                <div class="col-1">{{auction.highestBid ? auction.highestBid : auction.startingPrice}}$</div>
+                <div class="col-1">{{auction.actualPrice}}$</div>
                 <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
                 <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
                 <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>

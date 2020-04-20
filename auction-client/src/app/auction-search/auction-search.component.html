@@ -1,0 +1,74 @@
+<div class="row mb-2">
+    <h3>Search for auctions</h3>
+</div>
+<div>
+    <form [formGroup]="auctionSearchForm" (ngSubmit)="onSearchSubmit()" (keydown.enter)="$event.preventDefault()" class="row mb-3 baseBox auctionSearchBox">
+        <div class="form-group col-12">
+            <label for="contains">Contains:</label>
+            <input type="text" class="form-control" formControlName="contains"/>
+        </div>
+        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+            <label for="endsFrom">Ends from:</label>
+            <input type="datetime-local" class="form-control" formControlName="endsFrom" [(ngModel)]="endsFrom" [ngClass]="{ 'is-invalid': searchSubmitted && auctionSearchForm.controls.endsFrom.errors }"/>
+            <div *ngIf="searchSubmitted && auctionSearchForm.controls.endsFrom.hasError('inThePast')" class="text-danger">
+                <div>This date cannot be in the past!</div>
+            </div>
+            <div *ngIf="searchSubmitted && auctionSearchForm.controls.endsFrom.hasError('fromDateLaterThanToDate')" class="text-danger">
+                <div>This date cannot be later than the to-date!</div>
+            </div>
+        </div>
+        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+            <label for="endsTo">Ends to:</label>
+            <input type="datetime-local" class="form-control" formControlName="endsTo" [(ngModel)]="endsTo" [ngClass]="{ 'is-invalid': searchSubmitted && auctionSearchForm.controls.endsTo.errors }"/>
+            <div *ngIf="searchSubmitted && auctionSearchForm.controls.endsTo.hasError('inThePast')" class="text-danger">
+                <div>This date cannot be in the past!</div>
+            </div>
+        </div>
+        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+            <label for="priceFrom">Price from:</label>
+            <input type="number" class="form-control" formControlName="priceFrom" [ngClass]="{ 'is-invalid': searchSubmitted && auctionSearchForm.errors }"/>
+            <div *ngIf="searchSubmitted && auctionSearchForm.hasError('minPriceLteZero')" class="text-danger">
+                <div>This value cannot be lower than zero!</div>
+            </div>
+        </div>
+        <div class="form-group col-xl-3 col-lg-6 col-md-6">
+            <label for="priceTo">Price to:</label>
+            <input type="number" class="form-control" formControlName="priceTo" [ngClass]="{ 'is-invalid': searchSubmitted && auctionSearchForm.errors }"/>
+            <div *ngIf="searchSubmitted && auctionSearchForm.hasError('maxPriceLteZero')" class="text-danger">
+                <div>This value cannot be lower than zero!</div>
+            </div>
+            <div *ngIf="searchSubmitted && auctionSearchForm.hasError('minPriceGtmaxPrice')" class="text-danger">
+                <div>This value cannot be lower than the minimum price!</div>
+            </div>
+        </div>
+        <div class="form-group col-xl-6 col-lg-12 col-md-12">
+            <label for="category">Category:</label>
+            <select type="select" class="form-control" formControlName="category">
+                <option>- No category -</option>
+                <option *ngFor="let category of categoriesForDropDown" [attr.value]="category.id">{{category.path}}</option>
+            </select>
+        </div>
+        <div class="form-group col-12">
+            <button class="btn btn-primary btn-round" [disabled]="searchButtonPressed">Search</button>
+        </div>
+        <!-- TODO: add a plus control for searching for keywords.-->
+    </form>
+</div>
+<div class="row mb-2">
+    <h3>Results</h3>
+</div>
+<div *ngIf="error" class="row">
+    <div class="col-9 alert alert-danger">{{error}}</div>
+</div>
+<div *ngIf="!error && foundAuctions.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
+    <div *ngFor="let auction of foundAuctions" class="row mb-3 baseBox auctionRowBox">
+        <div class="col-4"><b><a href="auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
+        <div class="col-1">{{auction.actualPrice}}$</div>
+        <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
+        <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
+        <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
+    </div>
+</div>
+<div *ngIf="!error && !foundAuctions.length" class="baseBox auctionsContainerBox">
+    No active auctions found.
+</div>

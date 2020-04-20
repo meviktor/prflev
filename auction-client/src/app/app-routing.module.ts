@@ -6,6 +6,7 @@ import { AuthGuard } from "./_guards/auth.gurad";
 import { HomeComponent } from './home/home.component';
 import { AuctionDetailsComponent } from './auction-details/auction-details.component';
 import { UserDetailsComponent } from './userdetails/userdetails.component';
+import { AuctionSearchComponent } from './auction-search/auction-search.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'auctionDetails/:id', component: AuctionDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'userDetails/:id', component: UserDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'userDetails/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'auctionSearch', component: AuctionSearchComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 

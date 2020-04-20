@@ -3,6 +3,7 @@ import { AuctionService } from '../_services/auction.service';
 import { first } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CategoryService } from '../_services/category.service';
+import { CategoryDropDownFormatter } from '../_utils/categoryDropdownFormatter';
 
 @Component({
   selector: 'app-auction-details',
@@ -26,7 +27,7 @@ export class AuctionDetailsComponent implements OnInit {
   watchingMyOwnAuction: Boolean;
   isAuctionExpired: Boolean;
 
-  constructor(private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder) { }
+  constructor(private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter) { }
 
   ngOnInit(): void {
     this.auctionService.getAuctionDetails(this.id)
@@ -94,15 +95,9 @@ export class AuctionDetailsComponent implements OnInit {
   private buildCategoryPath(): void {
     this.categoryService.getAllProductCategories()
     .subscribe(categoryList => {
-      this.path = [];
-      let nextCategoryId = this.auctionData.product.productCategoryId;
-      while(nextCategoryId){
-        //filter should result an array containing one item
-        const foundCategory = categoryList.filter(category => category.id == nextCategoryId)[0];
-        this.path.push(foundCategory.name);
-        nextCategoryId = foundCategory.parentCategoryId;
-      }
-      this.path.reverse();
+      this.path = this.categoryFormatter.format(categoryList)
+        .filter(item => item.id == this.auctionData.product.productCategoryId)[0]
+        .path;
     });
   }
 
@@ -134,7 +129,7 @@ export class AuctionDetailsComponent implements OnInit {
         if(this.auctionData.bids.length == 0 && amountControl.value < this.auctionData.startingPrice){
           return {lowOpeningBid: true};
         }
-        if(this.auctionData.bids.length != 0 && amountControl.value < (this.auctionData.highestBid + this.auctionData.incr)){
+        if(this.auctionData.bids.length != 0 && amountControl.value < (this.auctionData.actualPrice + this.auctionData.incr)){
           return {lowBid: true}
         }
       }
