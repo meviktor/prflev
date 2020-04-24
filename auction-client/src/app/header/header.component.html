@@ -1,0 +1,10 @@
+<div class="row header">
+    <div class="col-3 vertical-center">
+        auction-gui
+    </div>
+    <div class="col-6"></div>
+    <div class="col-3 vertical-center right">
+        <fa-icon [icon]="faUser"></fa-icon><a routerLink="/">{{userDetails.username}}</a>
+        <a routerLink="/login" (click)="logout()"><fa-icon [icon]="faSignOutAlt"></fa-icon></a> 
+    </div>
+</div>

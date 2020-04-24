@@ -62,3 +62,8 @@ a:visited{
 .baseBox.auctionRowBox{
     background: #5fb0ff;
 }
+
+.vertical-center{
+    display: flex;
+    align-items: center;
+}

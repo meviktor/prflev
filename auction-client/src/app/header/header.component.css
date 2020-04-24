@@ -1,0 +1,16 @@
+.header{
+    height: 40px;
+    width: 100%;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+a {
+    color: #ffffff;
+    margin-left: 10px;
+    margin-right: 20px;
+}
