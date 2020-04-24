@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
             userId = decodeURI(req.query.userId);
         }
         else{
-            throw new APIError('The parameter contains the user id (userId) is missing.', 400);
+            userId = req.user.sub;
         }
 
         const userDetails = await getUserDetails(userId);

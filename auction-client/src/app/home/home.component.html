@@ -1,1 +1,84 @@
-<h2 class="display-4">Successful login!</h2>
+<div class="row mb-2">
+    <div class="display-4">Hi there</div>
+</div>
+<div class="row mb-3">
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 baseBox dashboardItemBox">
+        <div class="row mb-1">
+            <div class="col">
+                <h4>Explore auctions</h4>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                Search among the auctions started by other users, start shopping!
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col">
+                <div class="btn btn-lg btn-primary"><a href="/auctionSearch">Search auctions</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 baseBox dashboardItemBox">
+        <div class="row mb-1">
+            <div class="col">
+                <h4>Create new auction</h4>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                Wanna sell something? Create a new auction with any starting price, increment and duration!
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col">
+                <div class="btn btn-lg btn-primary"><a href="/createAuction">Create auction</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-11 baseBox dashboardItemBox">
+        <div class="row mb-2">
+            <h3>Your auctions</h3>
+        </div>
+        <div *ngIf="auctionsToShowError" class="row">
+            <div class="col alert alert-danger">{{auctionsToShowError}}</div>
+        </div>
+        <div *ngIf="!auctionsToShowError && auctionsToShow.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
+            <div *ngFor="let auction of auctionsToShow" [ngClass]="{'row mb-3 baseBox auctionRowBox': true, 'inactiveAuctionBox': isExpired(auction.endsAt)}">
+                <div class="col-4"><b><a href="auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
+                <div class="col-1">{{auction.actualPrice}}$</div>
+                <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
+                <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
+                <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
+            </div>
+        </div>
+        <div *ngIf="!auctionsToShowError && !auctionsToShow.length" class="row mb-1 baseBox auctionsContainerBox">
+            No auctions found.
+        </div>
+        <div class="row">
+            <button class="btn btn-primary" (click)="setAuctionsToShow();">{{auctionButtonText}}</button>
+        </div>
+    </div>
+    <div class="col-11 baseBox dashboardItemBox">
+        <div class="row mb-2">
+            <h3>Auctions won by you</h3>
+        </div>
+        <div *ngIf="auctionsWonError" class="row">
+            <div class="col alert alert-danger">{{auctionsWonError}}</div>
+        </div>
+        <div *ngIf="!auctionsWonError && auctionsToShow.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
+            <div *ngFor="let auction of auctionsWon" class="row mb-3 baseBox auctionRowBox inactiveAuctionBox">
+                <div class="col-4"><b><a href="auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
+                <div class="col-1">{{auction.actualPrice}}$</div>
+                <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
+                <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
+                <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
+            </div>
+        </div>
+        <div *ngIf="!auctionsWonError && !auctionsToShow.length" class="baseBox auctionsContainerBox">
+            No auctions found.
+        </div>
+    </div>
+</div>

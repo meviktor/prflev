@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { AuctionDetailsComponent } from './auction-details/auction-details.component';
 import { UserDetailsComponent } from './userdetails/userdetails.component';
 import { AuctionSearchComponent } from './auction-search/auction-search.component';
+import { CreateAuctionComponent } from './create-auction/create-auction.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'auctionDetails/:id', component: AuctionDetailsComponent, canActivate: [AuthGuard] },
   { path: 'userDetails/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
   { path: 'auctionSearch', component: AuctionSearchComponent, canActivate: [AuthGuard] },
+  { path: 'createAuction', component: CreateAuctionComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 

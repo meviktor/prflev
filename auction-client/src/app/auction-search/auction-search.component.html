@@ -44,7 +44,6 @@
         <div class="form-group col-xl-6 col-lg-12 col-md-12">
             <label for="category">Category:</label>
             <select type="select" class="form-control" formControlName="category">
-                <option>- No category -</option>
                 <option *ngFor="let category of categoriesForDropDown" [attr.value]="category.id">{{category.path}}</option>
             </select>
         </div>

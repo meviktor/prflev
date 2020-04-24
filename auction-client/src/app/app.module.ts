@@ -15,6 +15,7 @@ import { AuctionDetailsComponent } from './auction-details/auction-details.compo
 import { UserDetailsComponent } from './userdetails/userdetails.component';
 import { AuctionSearchComponent } from './auction-search/auction-search.component';
 import { CategoryDropDownFormatter } from './_utils/categoryDropdownFormatter';
+import { CreateAuctionComponent } from './create-auction/create-auction.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CategoryDropDownFormatter } from './_utils/categoryDropdownFormatter';
     HomeComponent,
     AuctionDetailsComponent,
     UserDetailsComponent,
-    AuctionSearchComponent
+    AuctionSearchComponent,
+    CreateAuctionComponent
   ],
   imports: [
     BrowserModule,

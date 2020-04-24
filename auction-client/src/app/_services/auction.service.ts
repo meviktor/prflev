@@ -13,8 +13,16 @@ export class AuctionService {
     return this.http.post<any>(`${environment.apiUrl}/queryAuctions`, auctionQuery);
   }
 
+  getAuctionsWonByUser(){
+    return this.http.get<any>(`${environment.apiUrl}/getWonAuctions`);
+  }
+
   getAuctionDetails(auctionId: string){
     return this.http.get<any>(`${environment.apiUrl}/auctionDetails`, {params: {auctionId: auctionId}});
+  }
+
+  addNewAuction(auction: any){
+    return this.http.post<any>(`${environment.apiUrl}/createAuction`, auction);
   }
 
   addNewBid(auctionId: string, amount: Number){

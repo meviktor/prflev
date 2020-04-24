@@ -28,6 +28,7 @@ app.use('/register', routes.register);
 app.use('/authenticate', routes.authenticate);
 app.use('/addComment', routes.addComment);
 app.use('/userDetails', routes.userDetails);
+app.use('/getWonAuctions', routes.getWonAuctions);
 
 connectDb().then(async () => {
     app.listen(process.env.API_PORT, () =>

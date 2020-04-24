@@ -1,0 +1,85 @@
+<div class="row mb-2">
+    <h3>Create new auction</h3>
+</div>
+<div>
+    <form [formGroup]="createAuctionForm" (ngSubmit)="onCreateSubmit()" (keydown.enter)="$event.preventDefault()" class="baseBox">
+        <div class="row mb-3 baseBox createAuctionSectionBox">
+            <div class="col-12">
+                <h4>Auction properties</h4>
+            </div>
+            <div class="form-group col-xl-3 col-lg-6 col-md-12">
+                <label for="startingPrice">Starting price:</label>
+                <input type="number" class="form-control" formControlName="startingPrice" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.startingPrice.errors }"/>
+                <div *ngIf="submitted && createAuctionForm.controls.startingPrice.hasError('required')" class="text-danger">
+                    <div>You have to provide the starting price!</div>
+                </div>
+                <div *ngIf="submitted && createAuctionForm.controls.startingPrice.hasError('min')" class="text-danger">
+                    <div>Starting price must be at least $0.01!</div>
+                </div>
+            </div>
+            <div class="form-group col-xl-3 col-lg-6 col-md-12">
+                <label for="increment">Increment:</label>
+                <input type="number" class="form-control" formControlName="increment" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.increment.errors }"/>
+                <div *ngIf="submitted && createAuctionForm.controls.increment.hasError('required')" class="text-danger">
+                    <div>You have to provide the increment!</div>
+                </div>
+                <div *ngIf="submitted && createAuctionForm.controls.increment.hasError('min')" class="text-danger">
+                    <div>Increment must be at least $0.01!</div>
+                </div>
+            </div>
+            <div class="form-group col-xl-3 col-lg-6 col-md-12">
+                <label for="auctionEndDate">End date:</label>
+                <input type="datetime-local" class="form-control" formControlName="auctionEndDate" [(ngModel)]="auctionEndDate" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.auctionEndDate.errors }"/>
+                <div *ngIf="submitted && createAuctionForm.controls.auctionEndDate.hasError('required')" class="text-danger">
+                    <div>You have to provide the auction end date!</div>
+                </div>
+                <div *ngIf="submitted && createAuctionForm.controls.auctionEndDate.hasError('notValidDate')" class="text-danger">
+                    <div>This is not a valid date!</div>
+                </div>
+                <div *ngIf="submitted && createAuctionForm.controls.auctionEndDate.hasError('dateInThePast')" class="text-danger">
+                    <div>Auction end date cannot be in the past!</div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 baseBox createAuctionSectionBox">
+            <div class="col-12">
+                <h4>Product properties</h4>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-6 col-lg-12">
+                    <label for="category">Category:</label>
+                    <select type="select" class="form-control" formControlName="category" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.category.errors }">
+                        <option *ngFor="let category of categoriesForDropDown" [attr.value]="category.id">{{category.path}}</option>
+                    </select>
+                    <div *ngIf="submitted && createAuctionForm.controls.category.hasError('required')" class="text-danger">
+                        <div>You have to provide the product category!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-6 col-lg-12">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" formControlName="name" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.name.errors }"/>
+                    <div *ngIf="submitted && createAuctionForm.controls.name.hasError('required')" class="text-danger">
+                        <div>You have to provide the product name!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-6 col-lg-12">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" formControlName="description"></textarea>
+                </div>
+            </div>
+            <!-- TODO: add a plus control for searching for keywords.-->
+        </div>
+        <div class="row mb-2">
+            <div class="form-group col-12">
+                <button class="btn btn-primary btn-round" [disabled]="createButtonPressed">Create</button>
+            </div>
+        </div>
+        <div *ngIf="error" class="row">
+            <div class="col-9 alert alert-danger">{{error}}</div>
+        </div>
+    </form>
+</div>

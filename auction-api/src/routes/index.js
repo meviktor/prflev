@@ -8,6 +8,7 @@ import register from './register';
 import authenticate from './authenticate';
 import addComment from './addComment';
 import userDetails from './userDetails';
+import getWonAuctions from './getWonAuctions';
 
 export default {
     queryAuctions,
@@ -19,5 +20,6 @@ export default {
     register,
     authenticate,
     addComment,
-    userDetails
+    userDetails,
+    getWonAuctions
 }
