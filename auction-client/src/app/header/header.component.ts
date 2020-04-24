@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { AuthenticationService } from '../_services/authentication.service';
-import { Router } from '@angular/router';
 import { faUser, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -10,11 +9,11 @@ import { faUser, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  userDetails: any;
+  userDetails: any = {};
   faUser = faUser;
   faSignOutAlt = faSignOutAlt;
 
-  constructor(private userService: UserService, private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private userService: UserService, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.userService.getUserDetails()
@@ -23,11 +22,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  navigateDashboard() {
-    this.router.navigate(["/"]);
-  }
-
-  logout() {
+  logout(): void {
     this.authenticationService.logout();
   }
 }

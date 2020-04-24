@@ -38,5 +38,4 @@ export class UserDetailsComponent implements OnInit {
       this.userAuctionError = error;
     });
   }
-
 }

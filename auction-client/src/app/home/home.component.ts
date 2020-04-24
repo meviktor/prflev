@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  setAuctionsToShow(){
+  setAuctionsToShow(): void {
     this.showInactiveAuctions = !this.showInactiveAuctions;
     if(this.showInactiveAuctions){
       this.auctionButtonText = "Show only active auctions";
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  isExpired(endDate: Date | string){
+  isExpired(endDate: Date | string): boolean {
     return new Date(endDate) <= this.now;
   }
 

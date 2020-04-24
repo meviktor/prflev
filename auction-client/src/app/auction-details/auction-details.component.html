@@ -2,7 +2,7 @@
 <div *ngIf="auctionData">
     <div class="row mb-2">
         <div class="col">
-            {{path}}
+            <fa-icon [icon]="faBoxOpen"></fa-icon>&nbsp;>&nbsp;{{path}}
         </div>
     </div>
     <div *ngIf="isAuctionExpired" class="row mb-1 expiredInfo">
@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let bid of auctionData.bids">
-                                    <td><a href="userDetails/{{bid.biddingUserId}}">{{bid.biddingUserName}}</a></td>
+                                    <td><a routerLink="/userDetails/{{bid.biddingUserId}}">{{bid.biddingUserName}}</a></td>
                                     <td>{{bid.amount}}$</td>
                                     <td>{{bid.createdDate}}</td>
                                 </tr>
@@ -58,7 +58,12 @@
                     </div>
                     <form [formGroup]="bidForm" (ngSubmit)="onBidSubmit()" (keydown.enter)="$event.preventDefault()">
                         <div class="form-group">
-                            <input type="number" formControlName="amount" class="form-control" [ngClass]="{ 'is-invalid': bidSubmitted && bidForm.controls.amount.errors }"/>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="number" min="0" formControlName="amount" class="form-control" [ngClass]="{ 'is-invalid': bidSubmitted && bidForm.controls.amount.errors }"/>
+                            </div>
                             <div *ngIf="bidSubmitted && bidForm.controls.amount.hasError('required')" class="text-danger">
                                 <div>Amount is missing!</div>
                             </div>
@@ -79,7 +84,7 @@
                     </div>
                 </div>
                 <div *ngIf="isAuctionExpired" class="col-4 baseBox labelBox expiredInfo">
-                    <div *ngIf="auctionData.bids.length"><b>Winner: <a href="userDetails/{{auctionData.bids[0].biddingUserId}}">{{auctionData.bids[0].biddingUserName}}</a></b></div>
+                    <div *ngIf="auctionData.bids.length"><b>Winner: <a routerLink="/userDetails/{{auctionData.bids[0].biddingUserId}}">{{auctionData.bids[0].biddingUserName}}</a></b></div>
                     <div *ngIf="!auctionData.bids.length">This auction has no winner.</div>
                 </div>
             </div>
@@ -90,7 +95,7 @@
                     <table style="width: 100%;">
                         <tr>
                             <td>Owner user:</td>
-                            <td><a href="userDetails/{{auctionData.ownerUserId}}">{{auctionData.ownerUserName}}</a></td>
+                            <td><a routerLink="/userDetails/{{auctionData.ownerUserId}}">{{auctionData.ownerUserName}}</a></td>
                         </tr>
                         <tr>
                             <td>Started at:</td>
@@ -112,7 +117,7 @@
                     <div *ngIf="auctionData.comments.length" class="baseBox commentsContainer scrollable customScrollbar">
                         <div *ngFor="let comment of auctionData.comments" class="baseBox commentBox">
                             <div class="row mb-1">
-                                <b><a href="userDetails/{{comment.commentingUserId}}">{{comment.commentingUserName}}</a></b>&nbsp;at&nbsp;<i>{{comment.createdDate}}</i>
+                                <b><a routerLink="/userDetails/{{comment.commentingUserId}}">{{comment.commentingUserName}}</a></b>&nbsp;at&nbsp;<i>{{comment.createdDate}}</i>
                             </div>
                             <hr/>
                             <div class="row mb-1">
@@ -126,7 +131,7 @@
                     <hr/>
                     <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()" (keydown.enter)="$event.preventDefault()">
                         <div class="form-group">
-                            <input type="text" formControlName="commentText" class="form-control" [ngClass]="{ 'is-invalid': commentSubmitted && commentForm.controls.commentText.errors }"/>
+                            <textarea formControlName="commentText" class="form-control" [ngClass]="{ 'is-invalid': commentSubmitted && commentForm.controls.commentText.errors }"></textarea>
                             <div *ngIf="commentSubmitted && commentForm.controls.commentText.hasError('required')" class="text-danger">
                                 <div>Comment text is missing!</div>
                             </div>

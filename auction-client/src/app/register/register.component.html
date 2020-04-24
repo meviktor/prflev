@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
             <button class="btn btn-lg btn-primary btn-round" [disabled]="registerButtonPressed">Sign up</button>
-            <div class="right"><a (click)="login()">Back to login</a></div>
+            <div class="right"><a routerLink="/login">Back to login</a></div>
         </div>
         <div *ngIf="error" class="alert alert-danger">{{error}}</div>
     </form>

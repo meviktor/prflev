@@ -7,7 +7,7 @@ export class CategoryDropDownFormatter{
      * Retrurns the list of product categories can be used with dropdowns ('id' as the value, 'path' to display in the dropdown).
      * @param input List of catergories returned by the API endpoint.
      */
-    format(input: any){
+    format(input: any): Array<any>{
         let output =[];
 
         for(let category of input){

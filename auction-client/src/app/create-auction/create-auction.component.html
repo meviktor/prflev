@@ -1,5 +1,5 @@
 <div class="row mb-2">
-    <h3>Create new auction</h3>
+    <div class="pageTitle">Create new auction</div>
 </div>
 <div>
     <form [formGroup]="createAuctionForm" (ngSubmit)="onCreateSubmit()" (keydown.enter)="$event.preventDefault()" class="baseBox">
@@ -9,7 +9,12 @@
             </div>
             <div class="form-group col-xl-3 col-lg-6 col-md-12">
                 <label for="startingPrice">Starting price:</label>
-                <input type="number" class="form-control" formControlName="startingPrice" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.startingPrice.errors }"/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input type="number" min="0" class="form-control" formControlName="startingPrice" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.startingPrice.errors }"/>
+                </div>
                 <div *ngIf="submitted && createAuctionForm.controls.startingPrice.hasError('required')" class="text-danger">
                     <div>You have to provide the starting price!</div>
                 </div>
@@ -19,7 +24,12 @@
             </div>
             <div class="form-group col-xl-3 col-lg-6 col-md-12">
                 <label for="increment">Increment:</label>
-                <input type="number" class="form-control" formControlName="increment" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.increment.errors }"/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                      </div>
+                    <input type="number" min="0" class="form-control" formControlName="increment" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.increment.errors }"/>
+                </div>
                 <div *ngIf="submitted && createAuctionForm.controls.increment.hasError('required')" class="text-danger">
                     <div>You have to provide the increment!</div>
                 </div>
@@ -29,7 +39,12 @@
             </div>
             <div class="form-group col-xl-3 col-lg-6 col-md-12">
                 <label for="auctionEndDate">End date:</label>
-                <input type="datetime-local" class="form-control" formControlName="auctionEndDate" [(ngModel)]="auctionEndDate" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.auctionEndDate.errors }"/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><fa-icon [icon]="faCalendarAlt"></fa-icon></div>
+                    </div>
+                    <input type="datetime-local" class="form-control" formControlName="auctionEndDate" [(ngModel)]="auctionEndDate" [ngClass]="{ 'is-invalid': submitted && createAuctionForm.controls.auctionEndDate.errors }"/>
+                </div>
                 <div *ngIf="submitted && createAuctionForm.controls.auctionEndDate.hasError('required')" class="text-danger">
                     <div>You have to provide the auction end date!</div>
                 </div>

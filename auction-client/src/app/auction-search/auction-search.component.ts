@@ -3,7 +3,7 @@ import { AuctionService } from '../_services/auction.service';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { CategoryDropDownFormatter } from '../_utils/categoryDropdownFormatter';
 import { CategoryService } from '../_services/category.service';
-import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-auction-search',
@@ -19,6 +19,7 @@ export class AuctionSearchComponent implements OnInit {
   categoriesForDropDown: any[] = [];
   foundAuctions: any[] = [];
   faComments = faComments;
+  faCalendarAlt = faCalendarAlt;
   error: string;
 
   constructor(private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter) { }

@@ -1,8 +1,8 @@
 <div class="row mb-2">
     <div class="display-4">Hi there</div>
 </div>
-<div class="row mb-3">
-    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 baseBox dashboardItemBox">
+<div class="row mb-1">
+    <div class="col-xl-3 col-md-6 col-sm-12 baseBox dashboardItemBox">
         <div class="row mb-1">
             <div class="col">
                 <h4>Explore auctions</h4>
@@ -15,11 +15,11 @@
         </div>
         <div class="row mb-1">
             <div class="col">
-                <div class="btn btn-lg btn-primary"><a href="/auctionSearch">Search auctions</a></div>
+                <div class="btn btn-lg btn-primary"><a routerLink="/auctionSearch">Search auctions</a></div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 baseBox dashboardItemBox">
+    <div class="col-xl-3 col-md-6 col-sm-12 baseBox dashboardItemBox">
         <div class="row mb-1">
             <div class="col">
                 <h4>Create new auction</h4>
@@ -32,7 +32,7 @@
         </div>
         <div class="row mb-1">
             <div class="col">
-                <div class="btn btn-lg btn-primary"><a href="/createAuction">Create auction</a></div>
+                <div class="btn btn-lg btn-primary"><a routerLink="/createAuction">Create auction</a></div>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
         </div>
         <div *ngIf="!auctionsToShowError && auctionsToShow.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
             <div *ngFor="let auction of auctionsToShow" [ngClass]="{'row mb-3 baseBox auctionRowBox': true, 'inactiveAuctionBox': isExpired(auction.endsAt)}">
-                <div class="col-4"><b><a href="auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
+                <div class="col-4"><b><a routerLink="/auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
                 <div class="col-1">{{auction.actualPrice}}$</div>
                 <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
                 <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
@@ -70,7 +70,7 @@
         </div>
         <div *ngIf="!auctionsWonError && auctionsToShow.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
             <div *ngFor="let auction of auctionsWon" class="row mb-3 baseBox auctionRowBox inactiveAuctionBox">
-                <div class="col-4"><b><a href="auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
+                <div class="col-4"><b><a routerLink="/auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
                 <div class="col-1">{{auction.actualPrice}}$</div>
                 <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
                 <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>

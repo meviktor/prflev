@@ -43,11 +43,7 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
-
-  login(): void {
-    this.router.navigate(["/login"]);
-  }
-
+  
   private checkPasswords(formGroup: FormGroup){
     return formGroup.get('password').value === formGroup.get('confirmPassword').value ?
       null : 

@@ -4,6 +4,7 @@ import { first } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CategoryService } from '../_services/category.service';
 import { CategoryDropDownFormatter } from '../_utils/categoryDropdownFormatter';
+import { faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-auction-details',
@@ -26,6 +27,8 @@ export class AuctionDetailsComponent implements OnInit {
 
   watchingMyOwnAuction: Boolean;
   isAuctionExpired: Boolean;
+
+  faBoxOpen = faBoxOpen;
 
   constructor(private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter) { }
 
@@ -111,7 +114,7 @@ export class AuctionDetailsComponent implements OnInit {
       (comment1, comment2) => this.cmpDates(comment1.createdDate, comment2.createdDate));
   }
 
-  private cmpDates(date1: any, date2: any){
+  private cmpDates(date1: any, date2: any): -1 | 0 | 1 {
     const date1Date = new Date(date1);
     const date2Date = new Date(date2);
     if(date1Date < date2Date){

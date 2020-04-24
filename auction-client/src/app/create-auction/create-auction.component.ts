@@ -4,6 +4,7 @@ import { CategoryDropDownFormatter } from '../_utils/categoryDropdownFormatter';
 import { CategoryService } from '../_services/category.service';
 import { AuctionService } from '../_services/auction.service';
 import { Router } from '@angular/router';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-create-auction',
@@ -18,6 +19,8 @@ export class CreateAuctionComponent implements OnInit {
   auctionEndDate: string;
   categoriesForDropDown: any[] = [];
   error: string;
+
+  faCalendarAlt = faCalendarAlt;
 
   constructor(private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter, private router: Router) { }
 

@@ -26,7 +26,7 @@ export class AuthenticationService {
         ));
     }
 
-    logout() {
+    logout(): void {
         localStorage.removeItem('accessToken');
         this.isAuthenticated = false;
     }
