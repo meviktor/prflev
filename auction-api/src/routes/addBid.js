@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
         if(new Date(foundAuction.endDate) < new Date()){
             throw new APIError(`This auction is expired at ${new Date(foundAuction.endDate)}. New bids are not allowed anymore.`, 400);
         }
-        if(!foundAuction.actualPrice){
+        if(!foundAuction.bids.length){
             if(!(Number(bidJson.amount) >= foundAuction.startingPrice)){
                 throw new APIError(`The starting bid cannot be lower than the starting price (${foundAuction.startingPrice}).`, 400);
             }

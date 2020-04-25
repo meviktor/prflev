@@ -80,7 +80,7 @@
                     </form>
                     <div>
                         <b>Increment:</b> {{auctionData.incr}}$.<br>
-                        Enter {{auctionData.actualPrice == auctionData.startingPrice ? auctionData.startingPrice : (auctionData.actualPrice + auctionData.incr)}}$ or more.
+                        Enter {{!auctionData.bids.length ? auctionData.startingPrice : (auctionData.actualPrice + auctionData.incr)}}$ or more.
                     </div>
                 </div>
                 <div *ngIf="isAuctionExpired" class="col-4 baseBox labelBox expiredInfo">
