@@ -46,7 +46,7 @@ async function findAuctionsWonByUser(userId){
         }
         const mapReduceOutput = (await models.Auction.mapReduce(mapRed)).results;
         // no auction found
-        if(mapReduceOutput == []){
+        if(!mapReduceOutput.length){
             return mapReduceOutput;
         }
         // more than one auctions found
@@ -59,7 +59,7 @@ async function findAuctionsWonByUser(userId){
         }
     }
     catch(e){
-        throw new APIError(`An error occured while searching for auctions. ${e}`, 500);
+        throw new APIError(`An error occured while searching for auctions.`, 500);
     }
 }
 
