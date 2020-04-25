@@ -50,7 +50,7 @@ async function authenticateUser(username, password){
     }
     if(!validCredentials) return null;
 
-    return jwt.sign({sub: user._id}, process.env.API_SECRET);
+    return jwt.sign({sub: user._id}, process.env.API_SECRET, {expiresIn: 3600});
 }
 
 export default router;
