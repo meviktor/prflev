@@ -81,7 +81,7 @@ export class AuctionSearchComponent implements OnInit {
         query.actualPriceMax = Number(priceToValue);
       }
       let categoryId = this.auctionSearchForm.controls.category.value;
-      if(categoryId){
+      if(categoryId != ""){
         query.productCategoryId = categoryId;
       }
 

@@ -12,17 +12,20 @@ router.post('/', async (req, res) => {
     try{
         // endDate
         const minEndDate = new Date(queryJson.endDateMin);
+        console.log(minEndDate);
         const maxEndDate = new Date(queryJson.endDateMax);
+        console.log(maxEndDate);
         if(queryJson.endDateMin){
             if(!utils.dates.isValidDate(minEndDate)){
                 throw new APIError('Invalid minimum value for auction end date.', 400);
             }
             else{
                 auctionQuery.endDate = { $gte: minEndDate };
+                console.log(auctionQuery);
             }
         }
         if(queryJson.endDateMax){
-            if(!utils.dates.isValidDate(maxEndDate) || !(maxEndDate >= minEndDate)){
+            if(!utils.dates.isValidDate(maxEndDate) || (!(maxEndDate >= minEndDate) && utils.dates.isValidDate(minEndDate))){
                 throw new APIError('Invalid maximum value for auction end date.', 400);
             }
             else{
@@ -34,6 +37,7 @@ router.post('/', async (req, res) => {
                 }
             } 
         }
+        console.log(auctionQuery);
 
         // startingPrice
         const minStartingPrice = 
@@ -118,9 +122,13 @@ router.post('/', async (req, res) => {
 
         // only active auctions (now =< endDate)
         if(queryJson.onlyActive === true){
-            // overwrite endDate filter's '>=' condition no matter what it contains...
             if(auctionQuery.endDate){
-                auctionQuery.endDate.$gte = new Date();
+                if(auctionQuery.endDate.$gte){
+                    auctionQuery.endDate.$gte = new Date(auctionQuery.endDate.$gte) > new Date() ? auctionQuery.endDate.$gte : new Date();
+                }
+                else{
+                    auctionQuery.endDate.$gte = new Date();
+                }
             }
             else{
                 auctionQuery.endDate = {$gte: new Date()};
@@ -131,6 +139,7 @@ router.post('/', async (req, res) => {
         //TODO: implement this...
 
         //sending the query to the database...
+        console.log(auctionQuery);
         const foundAuctions = await produceAuctionList(auctionQuery);
 
         return res.send(foundAuctions);

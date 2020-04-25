@@ -1,3 +1,7 @@
 .baseBox.createAuctionSectionBox{
     background: #42a5f5;
 }
+
+.descriptionTextArea {
+    height: 150px;
+}

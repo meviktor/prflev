@@ -33,7 +33,7 @@ export class CategoryDropDownFormatter{
 
             output.push(item);
         }
-        output.push({id: 'false', path:'- No Category -'});
+        output.push({id: "", path:'- No Category -'});
 
         output.sort((item1, item2) => {
             let item1Path = item1.path.toLowerCase();
