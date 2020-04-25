@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuctionService } from '../_services/auction.service';
 import { UserService } from '../_services/user.service';
 import { first } from 'rxjs/operators';
-import { faComments } from '@fortawesome/free-solid-svg-icons'
+import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { JsonDateParserExtension } from '../_utils/jsonDateParserExtension';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
 
   faComments = faComments;
 
-  constructor(private userService: UserService, private auctionService: AuctionService) { }
+  constructor(private userService: UserService, private auctionService: AuctionService, private jsonDateParser: JsonDateParserExtension) { }
 
   ngOnInit(): void {
     this.userService.getUserDetails()
@@ -33,7 +34,7 @@ export class HomeComponent implements OnInit {
       this.auctionService.queryAuctions({
         ownerUserId: userData.id
       }).subscribe(auctions => {
-        this.allAuctionsOfUser = auctions;
+        this.allAuctionsOfUser = JSON.parse(JSON.stringify(auctions), this.jsonDateParser.stringToDate);
         this.auctionsToShow = this.allAuctionsOfUser.filter(auction => !this.isExpired(auction.endsAt));
         this.auctionButtonText = "Show all auctions";
       },
@@ -42,7 +43,7 @@ export class HomeComponent implements OnInit {
       });
       this.auctionService.getAuctionsWonByUser()
       .subscribe(auctions => {
-        this.auctionsWon = auctions;
+        this.auctionsWon = JSON.parse(JSON.stringify(auctions), this.jsonDateParser.stringToDate);
       },
       error =>{
         this.auctionsWonError = error;

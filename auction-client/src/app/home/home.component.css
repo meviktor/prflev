@@ -25,3 +25,7 @@
 .baseBox.inactiveAuctionBox {
     background-color: #ffaaaa;
 }
+
+.baseBox.auctionsContainerBox.onDashboard {
+  max-height: 250px;
+}

@@ -16,6 +16,7 @@ import { AuctionDetailsComponent } from './auction-details/auction-details.compo
 import { UserDetailsComponent } from './userdetails/userdetails.component';
 import { AuctionSearchComponent } from './auction-search/auction-search.component';
 import { CategoryDropDownFormatter } from './_utils/categoryDropdownFormatter';
+import { JsonDateParserExtension } from './_utils/jsonDateParserExtension';
 import { CreateAuctionComponent } from './create-auction/create-auction.component';
 import { HeaderComponent } from './header/header.component';
 
@@ -41,7 +42,8 @@ import { HeaderComponent } from './header/header.component';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: CategoryDropDownFormatter }
+    { provide: CategoryDropDownFormatter },
+    { provide: JsonDateParserExtension }
   ],
   bootstrap: [AppComponent]
 })

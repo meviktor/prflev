@@ -74,7 +74,7 @@
     </form>
 </div>
 <div class="row mb-2">
-    <h3>Results</h3>
+    <div class="pageTitle subTitle">Results</div>
 </div>
 <div *ngIf="error" class="row">
     <div class="col-9 alert alert-danger">{{error}}</div>
@@ -83,8 +83,8 @@
     <div *ngFor="let auction of foundAuctions" class="row mb-3 baseBox auctionRowBox">
         <div class="col-4"><b><a routerLink="/auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
         <div class="col-1">{{auction.actualPrice}}$</div>
-        <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
-        <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
+        <div class="col-3">Started:&nbsp;{{auction.startedAt.toLocaleString()}}</div>
+        <div class="col-3">Ends:&nbsp;{{auction.endsAt.toLocaleString()}}</div>
         <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
     </div>
 </div>

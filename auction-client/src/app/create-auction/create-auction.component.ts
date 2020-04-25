@@ -73,13 +73,13 @@ export class CreateAuctionComponent implements OnInit {
 
   private auctionEndDateValidator(auctionEndDate: AbstractControl){
     const now = new Date();
-      const endDate = new Date(auctionEndDate.value);
-      if(isNaN(endDate.valueOf())){
-        return {notValidDate: true};
-      }
-      if(endDate <= now){
-        return {dateInThePast: true};
-      }
+    const endDate = new Date(auctionEndDate.value);
+    if(isNaN(endDate.valueOf())){
+      return {notValidDate: true};
+    }
+    if(endDate <= now){
+      return {dateInThePast: true};
+    }
     return null;
   }
 

@@ -45,12 +45,12 @@
         <div *ngIf="auctionsToShowError" class="row">
             <div class="col alert alert-danger">{{auctionsToShowError}}</div>
         </div>
-        <div *ngIf="!auctionsToShowError && auctionsToShow.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
+        <div *ngIf="!auctionsToShowError && auctionsToShow.length" class="baseBox auctionsContainerBox onDashboard scrollable customScrollbar">
             <div *ngFor="let auction of auctionsToShow" [ngClass]="{'row mb-3 baseBox auctionRowBox': true, 'inactiveAuctionBox': isExpired(auction.endsAt)}">
                 <div class="col-4"><b><a routerLink="/auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
                 <div class="col-1">{{auction.actualPrice}}$</div>
-                <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
-                <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
+                <div class="col-3">Started:&nbsp;{{auction.startedAt.toLocaleString()}}</div>
+                <div class="col-3">Ends:&nbsp;{{auction.endsAt.toLocaleString()}}</div>
                 <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
             </div>
         </div>
@@ -68,12 +68,12 @@
         <div *ngIf="auctionsWonError" class="row">
             <div class="col alert alert-danger">{{auctionsWonError}}</div>
         </div>
-        <div *ngIf="!auctionsWonError && auctionsToShow.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
+        <div *ngIf="!auctionsWonError && auctionsToShow.length" class="baseBox auctionsContainerBox onDashboard scrollable customScrollbar">
             <div *ngFor="let auction of auctionsWon" class="row mb-3 baseBox auctionRowBox inactiveAuctionBox">
                 <div class="col-4"><b><a routerLink="/auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
                 <div class="col-1">{{auction.actualPrice}}$</div>
-                <div class="col-3">Started:&nbsp;{{auction.startedAt}}</div>
-                <div class="col-3">Ends:&nbsp;{{auction.endsAt}}</div>
+                <div class="col-3">Started:&nbsp;{{auction.startedAt.toLocaleString()}}</div>
+                <div class="col-3">Ends:&nbsp;{{auction.endsAt.toLocaleString()}}</div>
                 <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
             </div>
         </div>

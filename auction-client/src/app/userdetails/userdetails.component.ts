@@ -3,6 +3,7 @@ import { UserService } from '../_services/user.service';
 import { AuctionService } from '../_services/auction.service';
 import { first } from 'rxjs/operators';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { JsonDateParserExtension } from '../_utils/jsonDateParserExtension';
 
 @Component({
   selector: 'app-userdetails',
@@ -18,7 +19,7 @@ export class UserDetailsComponent implements OnInit {
 
   faComments = faComments;
 
-  constructor(private userService: UserService, private auctionService: AuctionService) { }
+  constructor(private userService: UserService, private auctionService: AuctionService, private jsonDateParser: JsonDateParserExtension) { }
 
   ngOnInit(): void {
     this.userService.getUserDetails(this.userId)
@@ -32,7 +33,7 @@ export class UserDetailsComponent implements OnInit {
 
     this.auctionService.queryAuctions({ownerUserId: this.userId, onlyActive: true})
     .subscribe( usersAuctions => {
-      this.usersActiveAuctions = usersAuctions;
+      this.usersActiveAuctions = JSON.parse(JSON.stringify(usersAuctions), this.jsonDateParser.stringToDate);
     },
     error => {
       this.userAuctionError = error;

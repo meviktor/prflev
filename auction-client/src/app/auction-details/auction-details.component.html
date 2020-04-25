@@ -43,7 +43,7 @@
                                 <tr *ngFor="let bid of auctionData.bids">
                                     <td><a routerLink="/userDetails/{{bid.biddingUserId}}">{{bid.biddingUserName}}</a></td>
                                     <td>{{bid.amount}}$</td>
-                                    <td>{{bid.createdDate}}</td>
+                                    <td>{{bid.createdDate.toLocaleString()}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -99,11 +99,11 @@
                         </tr>
                         <tr>
                             <td>Started at:</td>
-                            <td>{{auctionData.startedAt}}</td>
+                            <td>{{auctionData.startedAt.toLocaleString()}}</td>
                         </tr>
                         <tr>
                             <td>Ends at:</td>
-                            <td [ngClass]="{ 'expiredInfo': isAuctionExpired }">{{auctionData.endsAt}}</td>
+                            <td [ngClass]="{ 'expiredInfo': isAuctionExpired }">{{auctionData.endsAt.toLocaleString()}}</td>
                         </tr>
                     </table>
                 </div>
@@ -117,7 +117,7 @@
                     <div *ngIf="auctionData.comments.length" class="baseBox commentsContainer scrollable customScrollbar">
                         <div *ngFor="let comment of auctionData.comments" class="baseBox commentBox">
                             <div class="row mb-1">
-                                <b><a routerLink="/userDetails/{{comment.commentingUserId}}">{{comment.commentingUserName}}</a></b>&nbsp;at&nbsp;<i>{{comment.createdDate}}</i>
+                                <b><a routerLink="/userDetails/{{comment.commentingUserId}}">{{comment.commentingUserName}}</a></b>&nbsp;at&nbsp;<i>{{comment.createdDate.toLocaleString()}}</i>
                             </div>
                             <hr/>
                             <div class="row mb-1">

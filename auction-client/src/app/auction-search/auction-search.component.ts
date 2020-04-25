@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { CategoryDropDownFormatter } from '../_utils/categoryDropdownFormatter';
 import { CategoryService } from '../_services/category.service';
 import { faComments, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { JsonDateParserExtension } from '../_utils/jsonDateParserExtension';
 
 @Component({
   selector: 'app-auction-search',
@@ -22,7 +23,9 @@ export class AuctionSearchComponent implements OnInit {
   faCalendarAlt = faCalendarAlt;
   error: string;
 
-  constructor(private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter) { }
+  constructor(
+    private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter, private jsonDateParser: JsonDateParserExtension)
+  { }
 
   ngOnInit(): void {
     this.auctionSearchForm = this.formBuilder.group({
@@ -81,7 +84,7 @@ export class AuctionSearchComponent implements OnInit {
       this.auctionService.queryAuctions(query)
       .subscribe(auctions => {
         this.searchButtonPressed = false;
-        this.foundAuctions = auctions;
+        this.foundAuctions = JSON.parse(JSON.stringify(auctions), this.jsonDateParser.stringToDate);
         this.error = undefined;
       },
       error => {

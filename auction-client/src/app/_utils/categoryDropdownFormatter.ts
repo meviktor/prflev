@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { pathToFileURL } from 'url';
 
 @Injectable()
 export class CategoryDropDownFormatter{

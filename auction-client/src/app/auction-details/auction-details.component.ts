@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { CategoryService } from '../_services/category.service';
 import { CategoryDropDownFormatter } from '../_utils/categoryDropdownFormatter';
 import { faBoxOpen } from '@fortawesome/free-solid-svg-icons';
+import { JsonDateParserExtension } from '../_utils/jsonDateParserExtension';
 
 @Component({
   selector: 'app-auction-details',
@@ -30,7 +31,9 @@ export class AuctionDetailsComponent implements OnInit {
 
   faBoxOpen = faBoxOpen;
 
-  constructor(private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter) { }
+  constructor(
+    private auctionService: AuctionService, private categoryService: CategoryService, private formBuilder: FormBuilder, private categoryFormatter: CategoryDropDownFormatter, private jsonDateParser: JsonDateParserExtension)
+  { }
 
   ngOnInit(): void {
     this.auctionService.getAuctionDetails(this.id)
@@ -105,7 +108,7 @@ export class AuctionDetailsComponent implements OnInit {
   }
 
   private refreshAuctionData(auctionData: any): void {
-    this.auctionData = auctionData;
+    this.auctionData = JSON.parse(JSON.stringify(auctionData), this.jsonDateParser.stringToDate);
     this.auctionData.bids.sort(
       // descending order by date
       (bid1, bid2) => this.cmpDates(bid1.createdDate, bid2.createdDate) * (-1));
