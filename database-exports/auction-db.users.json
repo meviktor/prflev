@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5ea44ba3c91d190914f96778"},"username":"TesztElek","password":"$2b$10$bJJoYSHch.HB7pTMaEAEk.Fd475RRKdeCXAuB1IH6PaYizF4txhf6","email":"tesztelek@test.com","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea44c24c91d190914f96779"},"username":"MyTestUser","password":"$2b$10$2Ua.zAOXfWuqzPE/uGp/7ObpuVxRh2bz6QA2cX3SkQi8Oa.F3Whca","email":"mytest@users.com","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea44d00c91d190914f9677a"},"username":"newbie","password":"$2b$10$MDjMyFRj3dtxxI1sQ7stxeGjMCZf1bTlM5n/kyUnL.5VzG3fIljF.","email":"newestuser@mail.com","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea44d48c91d190914f9677b"},"username":"AuctionTester","password":"$2b$10$4e4jpD7WyVApd7wwzlltLug6JHJbdm39hHrMdIurnXz/rflH0BLJO","email":"info@auctiontest.com","__v":{"$numberInt":"0"}}

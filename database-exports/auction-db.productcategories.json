@@ -1,0 +1,21 @@
+{"_id":{"$oid":"5ea45138c91d190914f9677c"},"name":"Electronics","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea451bec91d190914f9677d"},"name":"Phones, tablets, gadgets","parentCategoryId":{"$oid":"5ea45138c91d190914f9677c"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45213c91d190914f9677e"},"name":"Computers and accessories","parentCategoryId":{"$oid":"5ea45138c91d190914f9677c"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea4522ec91d190914f9677f"},"name":"Household appliances","parentCategoryId":{"$oid":"5ea45138c91d190914f9677c"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea4524bc91d190914f96780"},"name":"Fashion","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea452ddc91d190914f96782"},"name":"Shoes","parentCategoryId":{"$oid":"5ea4524bc91d190914f96780"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea452fbc91d190914f96783"},"name":"Accessories","parentCategoryId":{"$oid":"5ea4524bc91d190914f96780"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45304c91d190914f96784"},"name":"Jeans","parentCategoryId":{"$oid":"5ea4524bc91d190914f96780"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45323c91d190914f96785"},"name":"T-shirts, shirts, blouses","parentCategoryId":{"$oid":"5ea4524bc91d190914f96780"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45330c91d190914f96786"},"name":"Coats","parentCategoryId":{"$oid":"5ea4524bc91d190914f96780"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45369c91d190914f96787"},"name":"Home & DIY","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45420c91d190914f96788"},"name":"Garden","parentCategoryId":{"$oid":"5ea45369c91d190914f96787"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea4542bc91d190914f96789"},"name":"Kitchen","parentCategoryId":{"$oid":"5ea45369c91d190914f96787"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45431c91d190914f9678a"},"name":"Pets","parentCategoryId":{"$oid":"5ea45369c91d190914f96787"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea4543bc91d190914f9678b"},"name":"Furniture","parentCategoryId":{"$oid":"5ea45369c91d190914f96787"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea4544fc91d190914f9678c"},"name":"Books","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea4545bc91d190914f9678d"},"name":"Car accessories","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45468c91d190914f9678e"},"name":"Other","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45512c91d190914f9678f"},"name":"Lawnmowers","parentCategoryId":{"$oid":"5ea45420c91d190914f96788"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea45527c91d190914f96790"},"name":"Pressure washers","parentCategoryId":{"$oid":"5ea45420c91d190914f96788"},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5ea4557cc91d190914f96791"},"name":"Grills","parentCategoryId":{"$oid":"5ea45420c91d190914f96788"},"__v":{"$numberInt":"0"}}
