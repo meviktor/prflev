@@ -1,7 +1,7 @@
 <div class="row mb-2">
     <div class="pageTitle">Create new auction</div>
 </div>
-<div>
+<div *ngIf="!categoryDropDownError">
     <form [formGroup]="createAuctionForm" (ngSubmit)="onCreateSubmit()" (keydown.enter)="$event.preventDefault()" class="baseBox">
         <div class="row mb-3 baseBox createAuctionSectionBox">
             <div class="col-12">
@@ -97,4 +97,7 @@
             <div class="col-9 alert alert-danger">{{error}}</div>
         </div>
     </form>
+</div>
+<div *ngIf="categoryDropDownError" class="row">
+    <div class="col-9 alert alert-danger">{{categoryDropDownError}}</div>
 </div>

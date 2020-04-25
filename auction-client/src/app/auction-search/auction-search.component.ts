@@ -21,6 +21,7 @@ export class AuctionSearchComponent implements OnInit {
   foundAuctions: any[] = [];
   faComments = faComments;
   faCalendarAlt = faCalendarAlt;
+  categoryDropDownError: string;
   error: string;
 
   constructor(
@@ -40,6 +41,9 @@ export class AuctionSearchComponent implements OnInit {
     this.categoryService.getAllProductCategories()
     .subscribe(categories => {
       this.categoriesForDropDown = this.categoryFormatter.format(categories);
+    },
+    error => {
+      this.categoryDropDownError = error;
     });
   }
 

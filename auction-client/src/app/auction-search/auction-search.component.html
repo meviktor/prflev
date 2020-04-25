@@ -1,7 +1,7 @@
 <div class="row mb-2">
     <div class="pageTitle">Search for auctions</div>
 </div>
-<div>
+<div *ngIf="!categoryDropDownError">
     <form [formGroup]="auctionSearchForm" (ngSubmit)="onSearchSubmit()" (keydown.enter)="$event.preventDefault()" class="row mb-3 baseBox auctionSearchBox">
         <div class="form-group col-12">
             <label for="contains">Contains:</label>
@@ -72,22 +72,25 @@
         </div>
         <!-- TODO: add a plus control for searching for keywords.-->
     </form>
-</div>
-<div class="row mb-2">
-    <div class="pageTitle subTitle">Results</div>
-</div>
-<div *ngIf="error" class="row">
-    <div class="col-9 alert alert-danger">{{error}}</div>
-</div>
-<div *ngIf="!error && foundAuctions.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
-    <div *ngFor="let auction of foundAuctions" class="row mb-3 baseBox auctionRowBox">
-        <div class="col-4"><b><a routerLink="/auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
-        <div class="col-1">{{auction.actualPrice}}$</div>
-        <div class="col-3">Started:&nbsp;{{auction.startedAt.toLocaleString()}}</div>
-        <div class="col-3">Ends:&nbsp;{{auction.endsAt.toLocaleString()}}</div>
-        <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
+    <div class="row mb-2">
+        <div class="pageTitle subTitle">Results</div>
+    </div>
+    <div *ngIf="error" class="row">
+        <div class="col-9 alert alert-danger">{{error}}</div>
+    </div>
+    <div *ngIf="!error && foundAuctions.length" class="baseBox auctionsContainerBox scrollable customScrollbar">
+        <div *ngFor="let auction of foundAuctions" class="row mb-3 baseBox auctionRowBox">
+            <div class="col-4"><b><a routerLink="/auctionDetails/{{auction.id}}">{{auction.productName}}</a></b></div>
+            <div class="col-1">{{auction.actualPrice}}$</div>
+            <div class="col-3">Started:&nbsp;{{auction.startedAt.toLocaleString()}}</div>
+            <div class="col-3">Ends:&nbsp;{{auction.endsAt.toLocaleString()}}</div>
+            <div class="col-1"><fa-icon [icon]="faComments"></fa-icon>&nbsp;{{auction.numberOfComments}}</div>
+        </div>
+    </div>
+    <div *ngIf="!error && !foundAuctions.length" class="baseBox auctionsContainerBox">
+        No active auctions found.
     </div>
 </div>
-<div *ngIf="!error && !foundAuctions.length" class="baseBox auctionsContainerBox">
-    No active auctions found.
+<div *ngIf="categoryDropDownError" class="row">
+    <div class="col-9 alert alert-danger">{{categoryDropDownError}}</div>
 </div>

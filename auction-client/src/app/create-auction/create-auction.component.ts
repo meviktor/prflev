@@ -19,6 +19,7 @@ export class CreateAuctionComponent implements OnInit {
   auctionEndDate: string;
   categoriesForDropDown: any[] = [];
   error: string;
+  categoryDropDownError: string;
 
   faCalendarAlt = faCalendarAlt;
 
@@ -37,6 +38,9 @@ export class CreateAuctionComponent implements OnInit {
     this.categoryService.getAllProductCategories()
     .subscribe(categories => {
       this.categoriesForDropDown = this.categoryFormatter.format(categories);
+    },
+    error => {
+      this.categoryDropDownError = error;
     });
   }
 

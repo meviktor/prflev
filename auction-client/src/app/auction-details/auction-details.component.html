@@ -1,5 +1,5 @@
 <div *ngIf="error" class="col-xl-9 col-lg-12 alert alert-danger">{{error}}</div>
-<div *ngIf="auctionData">
+<div *ngIf="!error && auctionData">
     <div class="row mb-2">
         <div class="col">
             <fa-icon [icon]="faBoxOpen"></fa-icon>&nbsp;>&nbsp;{{path}}

@@ -74,6 +74,9 @@ export class AuctionDetailsComponent implements OnInit {
         error => {
           this.error = error;
         });
+      },
+      error => {
+        this.error = error;
       });
     }
   }
@@ -94,6 +97,9 @@ export class AuctionDetailsComponent implements OnInit {
         error => {
           this.error = error;
         });
+      },
+      error => {
+        this.error = error;
       });
     }
   }
